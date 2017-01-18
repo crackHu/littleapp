@@ -1,2 +1,2 @@
 # littleapp
-Littleapp of Wechat
+Littleapp for Wechat

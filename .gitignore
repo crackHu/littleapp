@@ -12,7 +12,7 @@ local.properties
 
 */.myeclipse/
 */.settings/
-*/.target/
+*/target/
 
 # Eclipse Core
 .project

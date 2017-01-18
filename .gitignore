@@ -10,11 +10,12 @@ local.properties
 .loadpath
 .recommenders
 
+# MyEclipse and Maven folder
 .myeclipse/
 target/
 
 # Eclipse Core
-.project
+# .project
 
 # External tool builders
 .externalToolBuilders/
@@ -29,7 +30,7 @@ target/
 .cproject
 
 # JDT-specific (Eclipse Java Development Tools)
-.classpath
+# .classpath
 
 # Java annotation processor (APT)
 .factorypath

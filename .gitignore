@@ -10,9 +10,9 @@ local.properties
 .loadpath
 .recommenders
 
-*/.myeclipse/
+*/.myeclipse/*
 */.settings/
-*/target/
+*/target/*
 
 # Eclipse Core
 .project

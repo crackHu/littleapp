@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.mybatis.mapper.mapper.LoggingEventPropertyMapper">
+  <resultMap id="BaseResultMap" type="tk.mybatis.mapper.model.LoggingEventProperty">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="event_id" jdbcType="BIGINT" property="eventId" />
+    <id column="mapped_key" jdbcType="VARCHAR" property="mappedKey" />
+    <result column="mapped_value" jdbcType="LONGVARCHAR" property="mappedValue" />
+  </resultMap>
+</mapper>

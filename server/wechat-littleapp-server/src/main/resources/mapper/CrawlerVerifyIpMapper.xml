@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ml.littleapp.mapper.CrawlerVerifyIpMapper">
+  <resultMap id="BaseResultMap" type="ml.littleapp.model.CrawlerVerifyIp">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIT" property="id" />
+    <result column="crawler_cip_id" jdbcType="BIT" property="crawlerCipId" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="district" jdbcType="VARCHAR" property="district" />
+    <result column="isp" jdbcType="VARCHAR" property="isp" />
+    <result column="lng" jdbcType="VARCHAR" property="lng" />
+    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="verify_url" jdbcType="VARCHAR" property="verifyUrl" />
+    <result column="verify_ret" jdbcType="CHAR" property="verifyRet" />
+    <result column="is_useful" jdbcType="BIT" property="isUseful" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="BIGINT" property="createDate" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="modify_date" jdbcType="BIGINT" property="modifyDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+</mapper>

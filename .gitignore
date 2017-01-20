@@ -1,5 +1,6 @@
 target/
 .myeclipse/
+.myumldata
 
 ### STS ###
 .apt_generated

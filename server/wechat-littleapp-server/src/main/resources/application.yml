@@ -6,8 +6,6 @@ logging:
 spring: 
     profiles: 
         active: dev
-    jpa: 
-        openInView: false
     redis:
         database: 0
         host: 127.0.0.1

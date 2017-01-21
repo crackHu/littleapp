@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ComponentScan
 @RestController
 @MapperScan(basePackages = { "ml.littleapp.mapper" }, markerInterface = MyMapper.class)
-@SpringBootApplication(exclude = SpringDataWebAutoConfiguration.class)
+@SpringBootApplication
 public class Application {
 
 	@RequestMapping("/")

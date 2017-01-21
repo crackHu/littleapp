@@ -10,6 +10,7 @@
 
 	<name>wechat-littleapp-server</name>
 	<description>Littleapp Server</description>
+	<url>https://github.com/crackHu/littleapp</url>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -18,7 +19,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<properties>
+	<properties> 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>

@@ -23,7 +23,7 @@
 			<connectionSource
 				class="ch.qos.logback.core.db.DriverManagerConnectionSource">
 				<driverClass>com.mysql.jdbc.Driver</driverClass>
-				<url>jdbc:mysql://localhost:3307/test?useSSL=false</url>
+				<url>jdbc:mysql://localhost:3307/littleapp?useSSL=false</url>
 				<user>root</user>
 				<password></password>
 			</connectionSource>

@@ -5,8 +5,8 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="BIT" property="id" />
-    <result column="crawler_cip_id" jdbcType="BIT" property="crawlerCipId" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="crawler_cip_id" jdbcType="INTEGER" property="crawlerCipId" />
     <result column="country" jdbcType="VARCHAR" property="country" />
     <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="city" jdbcType="VARCHAR" property="city" />

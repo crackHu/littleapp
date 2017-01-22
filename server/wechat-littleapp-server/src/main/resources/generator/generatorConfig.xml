@@ -20,7 +20,9 @@
                         password="${jdbc.password}">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="${targetModelPackage}" targetProject="${targetJavaProject}"/>
+        <javaModelGenerator targetPackage="${targetModelPackage}" targetProject="${targetJavaProject}">
+        	<property name="rootClass" value="${modelRootClass}" />
+        </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="${targetXMLPackage}"  targetProject="${targetResourcesProject}"/>
 

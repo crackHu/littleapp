@@ -3,300 +3,426 @@ package ml.littleapp.model;
 import javax.persistence.*;
 
 @Table(name = "crawler_verify_ip")
-public class CrawlerVerifyIp {
+public class CrawlerVerifyIp extends BaseEntity {
+    /**
+     * id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private byte[] id;
+    private Integer id;
 
+    /**
+     * crawler_cip_id
+     */
     @Column(name = "crawler_cip_id")
-    private byte[] crawlerCipId;
+    private Integer crawlerCipId;
 
+    /**
+     * country
+     */
     private String country;
 
+    /**
+     * province
+     */
     private String province;
 
+    /**
+     * city
+     */
     private String city;
 
+    /**
+     * district
+     */
     private String district;
 
+    /**
+     * isp
+     */
     private String isp;
 
+    /**
+     * lng
+     */
     private String lng;
 
+    /**
+     * lat
+     */
     private String lat;
 
+    /**
+     * verify_url
+     */
     @Column(name = "verify_url")
     private String verifyUrl;
 
+    /**
+     * verify_ret
+     */
     @Column(name = "verify_ret")
     private String verifyRet;
 
+    /**
+     * is_useful
+     */
     @Column(name = "is_useful")
     private Boolean isUseful;
 
+    /**
+     * create_by
+     */
     @Column(name = "create_by")
     private String createBy;
 
+    /**
+     * create_date
+     */
     @Column(name = "create_date")
     private Long createDate;
 
+    /**
+     * modify_by
+     */
     @Column(name = "modify_by")
     private String modifyBy;
 
+    /**
+     * modify_date
+     */
     @Column(name = "modify_date")
     private Long modifyDate;
 
+    /**
+     * remarks
+     */
     private String remarks;
 
+    /**
+     * deleted
+     */
     private Boolean deleted;
 
     /**
-     * @return id
+     * 获取id
+     *
+     * @return id - id
      */
-    public byte[] getId() {
+    public Integer getId() {
         return id;
     }
 
     /**
-     * @param id
+     * 设置id
+     *
+     * @param id id
      */
-    public void setId(byte[] id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * @return crawler_cip_id
+     * 获取crawler_cip_id
+     *
+     * @return crawler_cip_id - crawler_cip_id
      */
-    public byte[] getCrawlerCipId() {
+    public Integer getCrawlerCipId() {
         return crawlerCipId;
     }
 
     /**
-     * @param crawlerCipId
+     * 设置crawler_cip_id
+     *
+     * @param crawlerCipId crawler_cip_id
      */
-    public void setCrawlerCipId(byte[] crawlerCipId) {
+    public void setCrawlerCipId(Integer crawlerCipId) {
         this.crawlerCipId = crawlerCipId;
     }
 
     /**
-     * @return country
+     * 获取country
+     *
+     * @return country - country
      */
     public String getCountry() {
         return country;
     }
 
     /**
-     * @param country
+     * 设置country
+     *
+     * @param country country
      */
     public void setCountry(String country) {
         this.country = country;
     }
 
     /**
-     * @return province
+     * 获取province
+     *
+     * @return province - province
      */
     public String getProvince() {
         return province;
     }
 
     /**
-     * @param province
+     * 设置province
+     *
+     * @param province province
      */
     public void setProvince(String province) {
         this.province = province;
     }
 
     /**
-     * @return city
+     * 获取city
+     *
+     * @return city - city
      */
     public String getCity() {
         return city;
     }
 
     /**
-     * @param city
+     * 设置city
+     *
+     * @param city city
      */
     public void setCity(String city) {
         this.city = city;
     }
 
     /**
-     * @return district
+     * 获取district
+     *
+     * @return district - district
      */
     public String getDistrict() {
         return district;
     }
 
     /**
-     * @param district
+     * 设置district
+     *
+     * @param district district
      */
     public void setDistrict(String district) {
         this.district = district;
     }
 
     /**
-     * @return isp
+     * 获取isp
+     *
+     * @return isp - isp
      */
     public String getIsp() {
         return isp;
     }
 
     /**
-     * @param isp
+     * 设置isp
+     *
+     * @param isp isp
      */
     public void setIsp(String isp) {
         this.isp = isp;
     }
 
     /**
-     * @return lng
+     * 获取lng
+     *
+     * @return lng - lng
      */
     public String getLng() {
         return lng;
     }
 
     /**
-     * @param lng
+     * 设置lng
+     *
+     * @param lng lng
      */
     public void setLng(String lng) {
         this.lng = lng;
     }
 
     /**
-     * @return lat
+     * 获取lat
+     *
+     * @return lat - lat
      */
     public String getLat() {
         return lat;
     }
 
     /**
-     * @param lat
+     * 设置lat
+     *
+     * @param lat lat
      */
     public void setLat(String lat) {
         this.lat = lat;
     }
 
     /**
-     * @return verify_url
+     * 获取verify_url
+     *
+     * @return verify_url - verify_url
      */
     public String getVerifyUrl() {
         return verifyUrl;
     }
 
     /**
-     * @param verifyUrl
+     * 设置verify_url
+     *
+     * @param verifyUrl verify_url
      */
     public void setVerifyUrl(String verifyUrl) {
         this.verifyUrl = verifyUrl;
     }
 
     /**
-     * @return verify_ret
+     * 获取verify_ret
+     *
+     * @return verify_ret - verify_ret
      */
     public String getVerifyRet() {
         return verifyRet;
     }
 
     /**
-     * @param verifyRet
+     * 设置verify_ret
+     *
+     * @param verifyRet verify_ret
      */
     public void setVerifyRet(String verifyRet) {
         this.verifyRet = verifyRet;
     }
 
     /**
-     * @return is_useful
+     * 获取is_useful
+     *
+     * @return is_useful - is_useful
      */
     public Boolean getIsUseful() {
         return isUseful;
     }
 
     /**
-     * @param isUseful
+     * 设置is_useful
+     *
+     * @param isUseful is_useful
      */
     public void setIsUseful(Boolean isUseful) {
         this.isUseful = isUseful;
     }
 
     /**
-     * @return create_by
+     * 获取create_by
+     *
+     * @return create_by - create_by
      */
     public String getCreateBy() {
         return createBy;
     }
 
     /**
-     * @param createBy
+     * 设置create_by
+     *
+     * @param createBy create_by
      */
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
     }
 
     /**
-     * @return create_date
+     * 获取create_date
+     *
+     * @return create_date - create_date
      */
     public Long getCreateDate() {
         return createDate;
     }
 
     /**
-     * @param createDate
+     * 设置create_date
+     *
+     * @param createDate create_date
      */
     public void setCreateDate(Long createDate) {
         this.createDate = createDate;
     }
 
     /**
-     * @return modify_by
+     * 获取modify_by
+     *
+     * @return modify_by - modify_by
      */
     public String getModifyBy() {
         return modifyBy;
     }
 
     /**
-     * @param modifyBy
+     * 设置modify_by
+     *
+     * @param modifyBy modify_by
      */
     public void setModifyBy(String modifyBy) {
         this.modifyBy = modifyBy;
     }
 
     /**
-     * @return modify_date
+     * 获取modify_date
+     *
+     * @return modify_date - modify_date
      */
     public Long getModifyDate() {
         return modifyDate;
     }
 
     /**
-     * @param modifyDate
+     * 设置modify_date
+     *
+     * @param modifyDate modify_date
      */
     public void setModifyDate(Long modifyDate) {
         this.modifyDate = modifyDate;
     }
 
     /**
-     * @return remarks
+     * 获取remarks
+     *
+     * @return remarks - remarks
      */
     public String getRemarks() {
         return remarks;
     }
 
     /**
-     * @param remarks
+     * 设置remarks
+     *
+     * @param remarks remarks
      */
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
     /**
-     * @return deleted
+     * 获取deleted
+     *
+     * @return deleted - deleted
      */
     public Boolean getDeleted() {
         return deleted;
     }
 
     /**
-     * @param deleted
+     * 设置deleted
+     *
+     * @param deleted deleted
      */
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;

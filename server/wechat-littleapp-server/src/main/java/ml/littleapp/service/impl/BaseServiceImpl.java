@@ -30,19 +30,18 @@ public class BaseServiceImpl<T extends BaseEntity> implements
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		mapper.deleteByPrimaryKey(id);
-
+	public int deleteById(Integer id) {
+		return mapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
-	public void save(T t) {
-		if (t.getId() == null) {
-			mapper.updateByPrimaryKey(t);
-		} else {
-			mapper.insert(t);
-		}
-
+	public int save(T t) {
+		return mapper.insert(t);
 	}
 
+	@Override
+	public int update(T t) {
+		return mapper.updateByPrimaryKey(t);
+	}
+	
 }

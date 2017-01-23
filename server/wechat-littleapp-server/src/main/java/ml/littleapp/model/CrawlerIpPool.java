@@ -2,14 +2,20 @@ package ml.littleapp.model;
 
 import javax.persistence.*;
 
-@Table(name = "crawler_crawl_ip")
-public class CrawlerCrawlIp extends BaseEntity {
+@Table(name = "crawler_ip_pool")
+public class CrawlerIpPool extends BaseEntity {
     /**
      * id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    /**
+     * crawler_ips_id
+     */
+    @Column(name = "crawler_ips_id")
+    private Integer crawlerIpsId;
 
     /**
      * ip
@@ -31,12 +37,6 @@ public class CrawlerCrawlIp extends BaseEntity {
      */
     @Column(name = "anon_type")
     private String anonType;
-
-    /**
-     * crawl_src
-     */
-    @Column(name = "crawl_src")
-    private String crawlSrc;
 
     /**
      * create_by
@@ -88,6 +88,24 @@ public class CrawlerCrawlIp extends BaseEntity {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    /**
+     * 获取crawler_ips_id
+     *
+     * @return crawler_ips_id - crawler_ips_id
+     */
+    public Integer getCrawlerIpsId() {
+        return crawlerIpsId;
+    }
+
+    /**
+     * 设置crawler_ips_id
+     *
+     * @param crawlerIpsId crawler_ips_id
+     */
+    public void setCrawlerIpsId(Integer crawlerIpsId) {
+        this.crawlerIpsId = crawlerIpsId;
     }
 
     /**
@@ -160,24 +178,6 @@ public class CrawlerCrawlIp extends BaseEntity {
      */
     public void setAnonType(String anonType) {
         this.anonType = anonType;
-    }
-
-    /**
-     * 获取crawl_src
-     *
-     * @return crawl_src - crawl_src
-     */
-    public String getCrawlSrc() {
-        return crawlSrc;
-    }
-
-    /**
-     * 设置crawl_src
-     *
-     * @param crawlSrc crawl_src
-     */
-    public void setCrawlSrc(String crawlSrc) {
-        this.crawlSrc = crawlSrc;
     }
 
     /**

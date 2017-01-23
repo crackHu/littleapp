@@ -1,5 +1,6 @@
 package ml.littleapp;
 
+import ml.littleapp.util.MyException;
 import ml.littleapp.util.MyMapper;
 
 import org.mybatis.spring.annotation.MapperScan;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class Application {
 
 	@RequestMapping("/")
-	String home() {
-		return "hello world";
+	String home() throws MyException {
+		throw new MyException("test exception");
 	}
 
 	public static void main(String[] args) {

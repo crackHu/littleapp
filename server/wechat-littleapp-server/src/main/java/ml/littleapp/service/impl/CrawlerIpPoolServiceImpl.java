@@ -2,19 +2,19 @@ package ml.littleapp.service.impl;
 
 import java.util.List;
 
-import ml.littleapp.model.CrawlerCrawlIp;
-import ml.littleapp.service.CrawlerCrawlIpService;
+import ml.littleapp.model.CrawlerIpPool;
+import ml.littleapp.service.CrawlerIpPoolService;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CrawlerCrawlIpServiceImpl extends BaseServiceImpl<CrawlerCrawlIp>
-		implements CrawlerCrawlIpService {
+public class CrawlerIpPoolServiceImpl extends BaseServiceImpl<CrawlerIpPool>
+		implements CrawlerIpPoolService {
 
 	@Override
 	@Cacheable(value = "test", keyGenerator = "keyGenerator")
-	public List<CrawlerCrawlIp> selectAll(CrawlerCrawlIp crawlerCrawlIp) {
+	public List<CrawlerIpPool> selectAll(CrawlerIpPool crawlerCrawlIp) {
 		System.out.println("无缓存的时候调用这里");
 		return super.getAll(crawlerCrawlIp);
 	}

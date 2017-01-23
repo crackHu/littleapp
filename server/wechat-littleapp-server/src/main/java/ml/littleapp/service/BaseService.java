@@ -8,7 +8,9 @@ public interface BaseService<T> {
 
 	T getById(Integer id);
 
-	void deleteById(Integer id);
+	int deleteById(Integer id);
 
-	void save(T t);
+	int save(T t);
+	
+	int update(T t);
 }

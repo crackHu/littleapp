@@ -17,6 +17,7 @@ public class CrawlerListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 
 		logger.info("监听器启动成功", sce);
+		
 	}
 
 	@Override

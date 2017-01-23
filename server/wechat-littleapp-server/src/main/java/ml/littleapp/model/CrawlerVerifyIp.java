@@ -12,10 +12,10 @@ public class CrawlerVerifyIp extends BaseEntity {
     private Integer id;
 
     /**
-     * crawler_cip_id
+     * crawler_ipp_id
      */
-    @Column(name = "crawler_cip_id")
-    private Integer crawlerCipId;
+    @Column(name = "crawler_ipp_id")
+    private Integer crawlerIppId;
 
     /**
      * country
@@ -123,21 +123,21 @@ public class CrawlerVerifyIp extends BaseEntity {
     }
 
     /**
-     * 获取crawler_cip_id
+     * 获取crawler_ipp_id
      *
-     * @return crawler_cip_id - crawler_cip_id
+     * @return crawler_ipp_id - crawler_ipp_id
      */
-    public Integer getCrawlerCipId() {
-        return crawlerCipId;
+    public Integer getCrawlerIppId() {
+        return crawlerIppId;
     }
 
     /**
-     * 设置crawler_cip_id
+     * 设置crawler_ipp_id
      *
-     * @param crawlerCipId crawler_cip_id
+     * @param crawlerIppId crawler_ipp_id
      */
-    public void setCrawlerCipId(Integer crawlerCipId) {
-        this.crawlerCipId = crawlerCipId;
+    public void setCrawlerIppId(Integer crawlerIppId) {
+        this.crawlerIppId = crawlerIppId;
     }
 
     /**

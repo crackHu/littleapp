@@ -1,4 +1,4 @@
-package ml.littleapp.controller;
+package ml.littleapp.global;
 
 import javax.servlet.http.HttpServletRequest;
 

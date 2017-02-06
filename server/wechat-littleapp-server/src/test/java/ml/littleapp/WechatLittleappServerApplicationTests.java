@@ -6,7 +6,9 @@ import javax.inject.Inject;
 
 import ml.littleapp.mapper.LoggingEventMapper;
 import ml.littleapp.model.CrawlerIpPool;
+import ml.littleapp.model.CrawlerIpSrc;
 import ml.littleapp.service.CrawlerIpPoolService;
+import ml.littleapp.service.impl.CrawlerIpSrcServiceImpl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,28 +23,29 @@ public class WechatLittleappServerApplicationTests {
 	private CrawlerIpPoolService CrawlerIpPoolService;
 	@Inject
 	private LoggingEventMapper loggingEventMapper;
+	@Inject
+	private CrawlerIpSrcServiceImpl crawlerIpSrcServiceImpl;
 
 	@Test
-	public void putCache() {
+	public void putCache() throws Exception {
 		CrawlerIpPool CrawlerIpPool = new CrawlerIpPool();
 		CrawlerIpPoolService.selectAll(CrawlerIpPool);
 	}
 
 	@Test
-	public void testInsertCrawlerIpPool() {
+	public void testInsertCrawlerIpPool() throws Exception {
 		CrawlerIpPool CrawlerIpPool = new CrawlerIpPool();
-		CrawlerIpPool.setId(234);
+		CrawlerIpPool.setId(234l);
 		CrawlerIpPool.setIp(2222);
 		CrawlerIpPool.setPort(2222);
 		CrawlerIpPool.setAddress("asdfg");
 		CrawlerIpPool.setCreateBy("huyg");
-		CrawlerIpPool.setCreateDate(234234l);
 		CrawlerIpPool.setDeleted(false);
 		CrawlerIpPoolService.save(CrawlerIpPool);
 	}
 
 	@Test
-	public void contextLoads() {
+	public void contextLoads() throws Exception {
 		CrawlerIpPool CrawlerIpPool = new CrawlerIpPool();
 		List<CrawlerIpPool> selectAll = CrawlerIpPoolService
 				.selectAll(CrawlerIpPool);
@@ -52,7 +55,7 @@ public class WechatLittleappServerApplicationTests {
 	}
 
 	@Test
-	public void testPage() {
+	public void testPage() throws Exception {
 		CrawlerIpPool CrawlerIpPool = new CrawlerIpPool();
 		List<CrawlerIpPool> list = CrawlerIpPoolService
 				.selectAll(CrawlerIpPool);
@@ -61,14 +64,24 @@ public class WechatLittleappServerApplicationTests {
 		}
 	}
 
-	public static void main(String[] args) throws Exception {
-		System.out.println(1);
-		try {
-			System.out.println(1 / 0);
-		} catch (Exception e) {
-			// TODO: handle exception
-			throw new Exception("asdfasd");
+	@Test
+	public void testCrawlerIpSrcSave() throws Exception {
+		crawlerIpSrcServiceImpl.saveByIpProperties();
+	}
+
+	@Test
+	public void testCrawlerIpSrcSelect() throws Exception {
+		CrawlerIpSrc crawlerIpSrc = new CrawlerIpSrc();
+		crawlerIpSrc.setPageNum(2);
+		crawlerIpSrc.setPageSize(2);
+		List<CrawlerIpSrc> all = crawlerIpSrcServiceImpl.getAll(crawlerIpSrc);
+		for (CrawlerIpSrc crawlerIpSrc2 : all) {
+			System.out.println(crawlerIpSrc2.getUrl());
 		}
-		System.out.println(2);
+	}
+
+	public static void main(String[] args) throws Exception {
+
+		System.out.println(1234l);
 	}
 }

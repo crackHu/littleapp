@@ -3,8 +3,8 @@ package ml.littleapp.model;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "crawler_ip_pool")
-public class CrawlerIpPool extends BaseEntity {
+@Table(name = "crawler_ip_src")
+public class CrawlerIpSrc extends BaseEntity {
     /**
      * id
      */
@@ -13,41 +13,20 @@ public class CrawlerIpPool extends BaseEntity {
     private Long id;
 
     /**
-     * src_paging_id
+     * url
      */
-    @Column(name = "src_paging_id")
-    private Integer srcPagingId;
+    private String url;
 
     /**
-     * ip
+     * title
      */
-    private Integer ip;
+    private String title;
 
     /**
-     * port
+     * page_total
      */
-    private Integer port;
-
-    /**
-     * address
-     */
-    private String address;
-
-    /**
-     * type
-     */
-    private String type;
-
-    /**
-     * protocol
-     */
-    private String protocol;
-
-    /**
-     * verify_date
-     */
-    @Column(name = "verify_date")
-    private String verifyDate;
+    @Column(name = "page_total")
+    private Integer pageTotal;
 
     /**
      * create_by
@@ -84,6 +63,11 @@ public class CrawlerIpPool extends BaseEntity {
     private Boolean deleted;
 
     /**
+     * content
+     */
+    private String content;
+
+    /**
      * 获取id
      *
      * @return id - id
@@ -102,129 +86,57 @@ public class CrawlerIpPool extends BaseEntity {
     }
 
     /**
-     * 获取src_paging_id
+     * 获取url
      *
-     * @return src_paging_id - src_paging_id
+     * @return url - url
      */
-    public Integer getSrcPagingId() {
-        return srcPagingId;
+    public String getUrl() {
+        return url;
     }
 
     /**
-     * 设置src_paging_id
+     * 设置url
      *
-     * @param srcPagingId src_paging_id
+     * @param url url
      */
-    public void setSrcPagingId(Integer srcPagingId) {
-        this.srcPagingId = srcPagingId;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     /**
-     * 获取ip
+     * 获取title
      *
-     * @return ip - ip
+     * @return title - title
      */
-    public Integer getIp() {
-        return ip;
+    public String getTitle() {
+        return title;
     }
 
     /**
-     * 设置ip
+     * 设置title
      *
-     * @param ip ip
+     * @param title title
      */
-    public void setIp(Integer ip) {
-        this.ip = ip;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
-     * 获取port
+     * 获取page_total
      *
-     * @return port - port
+     * @return page_total - page_total
      */
-    public Integer getPort() {
-        return port;
+    public Integer getPageTotal() {
+        return pageTotal;
     }
 
     /**
-     * 设置port
+     * 设置page_total
      *
-     * @param port port
+     * @param pageTotal page_total
      */
-    public void setPort(Integer port) {
-        this.port = port;
-    }
-
-    /**
-     * 获取address
-     *
-     * @return address - address
-     */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * 设置address
-     *
-     * @param address address
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    /**
-     * 获取type
-     *
-     * @return type - type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * 设置type
-     *
-     * @param type type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
-     * 获取protocol
-     *
-     * @return protocol - protocol
-     */
-    public String getProtocol() {
-        return protocol;
-    }
-
-    /**
-     * 设置protocol
-     *
-     * @param protocol protocol
-     */
-    public void setProtocol(String protocol) {
-        this.protocol = protocol;
-    }
-
-    /**
-     * 获取verify_date
-     *
-     * @return verify_date - verify_date
-     */
-    public String getVerifyDate() {
-        return verifyDate;
-    }
-
-    /**
-     * 设置verify_date
-     *
-     * @param verifyDate verify_date
-     */
-    public void setVerifyDate(String verifyDate) {
-        this.verifyDate = verifyDate;
+    public void setPageTotal(Integer pageTotal) {
+        this.pageTotal = pageTotal;
     }
 
     /**
@@ -333,5 +245,23 @@ public class CrawlerIpPool extends BaseEntity {
      */
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    /**
+     * 获取content
+     *
+     * @return content - content
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * 设置content
+     *
+     * @param content content
+     */
+    public void setContent(String content) {
+        this.content = content;
     }
 }

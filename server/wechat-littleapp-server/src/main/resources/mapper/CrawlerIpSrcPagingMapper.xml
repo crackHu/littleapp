@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ml.littleapp.mapper.CrawlerIpSourceMapper">
-  <resultMap id="BaseResultMap" type="ml.littleapp.model.CrawlerIpSource">
+<mapper namespace="ml.littleapp.mapper.CrawlerIpSrcPagingMapper">
+  <resultMap id="BaseResultMap" type="ml.littleapp.model.CrawlerIpSrcPaging">
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="src_id" jdbcType="INTEGER" property="srcId" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="rule" jdbcType="VARCHAR" property="rule" />
+    <result column="page_no" jdbcType="INTEGER" property="pageNo" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
-    <result column="create_date" jdbcType="BIGINT" property="createDate" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
-    <result column="modify_date" jdbcType="BIGINT" property="modifyDate" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
     <result column="remarks" jdbcType="VARCHAR" property="remarks" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
 </mapper>

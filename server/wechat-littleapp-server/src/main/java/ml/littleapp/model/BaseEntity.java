@@ -1,9 +1,5 @@
 package ml.littleapp.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Transient;
 
 /**
@@ -13,38 +9,28 @@ import javax.persistence.Transient;
  * @since 2017-01-22 14:40:04
  */
 public class BaseEntity {
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
 
 	@Transient
-	private Integer page = 1;
-
+	private Integer pageNum = 1;
+	 
 	@Transient
-	private Integer rows = 10;
+	private Integer pageSize = 10;
 
-	public Integer getId() {
-		return id;
+	public Integer getPageNum() {
+		return pageNum;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setPageNum(Integer pageNum) {
+		this.pageNum = pageNum;
 	}
 
-	public Integer getPage() {
-		return page;
+	public Integer getPageSize() {
+		return pageSize;
 	}
 
-	public void setPage(Integer page) {
-		this.page = page;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
-	public Integer getRows() {
-		return rows;
-	}
-
-	public void setRows(Integer rows) {
-		this.rows = rows;
-	}
+	
 }

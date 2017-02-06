@@ -14,7 +14,7 @@ public class CrawlerIpPoolServiceImpl extends BaseServiceImpl<CrawlerIpPool>
 
 	@Override
 	@Cacheable(value = "test", keyGenerator = "keyGenerator")
-	public List<CrawlerIpPool> selectAll(CrawlerIpPool crawlerCrawlIp) {
+	public List<CrawlerIpPool> selectAll(CrawlerIpPool crawlerCrawlIp) throws Exception {
 		System.out.println("无缓存的时候调用这里");
 		return super.getAll(crawlerCrawlIp);
 	}

@@ -1,15 +1,22 @@
 package ml.littleapp.model;
 
+import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "crawler_ip_source")
-public class CrawlerIpSource extends BaseEntity {
+@Table(name = "crawler_ip_src_paging")
+public class CrawlerIpSrcPaging extends BaseEntity {
     /**
      * id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+
+    /**
+     * src_id
+     */
+    @Column(name = "src_id")
+    private Integer srcId;
 
     /**
      * url
@@ -22,9 +29,10 @@ public class CrawlerIpSource extends BaseEntity {
     private String title;
 
     /**
-     * rule
+     * page_no
      */
-    private String rule;
+    @Column(name = "page_no")
+    private Integer pageNo;
 
     /**
      * create_by
@@ -36,7 +44,7 @@ public class CrawlerIpSource extends BaseEntity {
      * create_date
      */
     @Column(name = "create_date")
-    private Long createDate;
+    private Date createDate;
 
     /**
      * modify_by
@@ -48,7 +56,7 @@ public class CrawlerIpSource extends BaseEntity {
      * modify_date
      */
     @Column(name = "modify_date")
-    private Long modifyDate;
+    private Date modifyDate;
 
     /**
      * remarks
@@ -61,11 +69,16 @@ public class CrawlerIpSource extends BaseEntity {
     private Boolean deleted;
 
     /**
+     * content
+     */
+    private String content;
+
+    /**
      * 获取id
      *
      * @return id - id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -74,8 +87,26 @@ public class CrawlerIpSource extends BaseEntity {
      *
      * @param id id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * 获取src_id
+     *
+     * @return src_id - src_id
+     */
+    public Integer getSrcId() {
+        return srcId;
+    }
+
+    /**
+     * 设置src_id
+     *
+     * @param srcId src_id
+     */
+    public void setSrcId(Integer srcId) {
+        this.srcId = srcId;
     }
 
     /**
@@ -115,21 +146,21 @@ public class CrawlerIpSource extends BaseEntity {
     }
 
     /**
-     * 获取rule
+     * 获取page_no
      *
-     * @return rule - rule
+     * @return page_no - page_no
      */
-    public String getRule() {
-        return rule;
+    public Integer getPageNo() {
+        return pageNo;
     }
 
     /**
-     * 设置rule
+     * 设置page_no
      *
-     * @param rule rule
+     * @param pageNo page_no
      */
-    public void setRule(String rule) {
-        this.rule = rule;
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
     }
 
     /**
@@ -155,7 +186,7 @@ public class CrawlerIpSource extends BaseEntity {
      *
      * @return create_date - create_date
      */
-    public Long getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
@@ -164,7 +195,7 @@ public class CrawlerIpSource extends BaseEntity {
      *
      * @param createDate create_date
      */
-    public void setCreateDate(Long createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
@@ -191,7 +222,7 @@ public class CrawlerIpSource extends BaseEntity {
      *
      * @return modify_date - modify_date
      */
-    public Long getModifyDate() {
+    public Date getModifyDate() {
         return modifyDate;
     }
 
@@ -200,7 +231,7 @@ public class CrawlerIpSource extends BaseEntity {
      *
      * @param modifyDate modify_date
      */
-    public void setModifyDate(Long modifyDate) {
+    public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 
@@ -238,5 +269,23 @@ public class CrawlerIpSource extends BaseEntity {
      */
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    /**
+     * 获取content
+     *
+     * @return content - content
+     */
+    public String getContent() {
+        return content;
+    }
+
+    /**
+     * 设置content
+     *
+     * @param content content
+     */
+    public void setContent(String content) {
+        this.content = content;
     }
 }

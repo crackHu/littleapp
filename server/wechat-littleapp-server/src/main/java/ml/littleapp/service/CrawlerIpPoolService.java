@@ -6,5 +6,6 @@ import ml.littleapp.model.CrawlerIpPool;
 
 public interface CrawlerIpPoolService extends BaseService<CrawlerIpPool> {
 
-	List<CrawlerIpPool> selectAll(CrawlerIpPool crawlerCrawlIp);
+	List<CrawlerIpPool> selectAll(CrawlerIpPool crawlerCrawlIp)
+			throws Exception;
 }

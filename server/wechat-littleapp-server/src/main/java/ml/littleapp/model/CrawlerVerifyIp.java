@@ -1,5 +1,6 @@
 package ml.littleapp.model;
 
+import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "crawler_verify_ip")
@@ -9,13 +10,13 @@ public class CrawlerVerifyIp extends BaseEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     /**
-     * crawler_ipp_id
+     * pool_id
      */
-    @Column(name = "crawler_ipp_id")
-    private Integer crawlerIppId;
+    @Column(name = "pool_id")
+    private Integer poolId;
 
     /**
      * country
@@ -80,7 +81,7 @@ public class CrawlerVerifyIp extends BaseEntity {
      * create_date
      */
     @Column(name = "create_date")
-    private Long createDate;
+    private Date createDate;
 
     /**
      * modify_by
@@ -92,7 +93,7 @@ public class CrawlerVerifyIp extends BaseEntity {
      * modify_date
      */
     @Column(name = "modify_date")
-    private Long modifyDate;
+    private Date modifyDate;
 
     /**
      * remarks
@@ -109,7 +110,7 @@ public class CrawlerVerifyIp extends BaseEntity {
      *
      * @return id - id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -118,26 +119,26 @@ public class CrawlerVerifyIp extends BaseEntity {
      *
      * @param id id
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
-     * 获取crawler_ipp_id
+     * 获取pool_id
      *
-     * @return crawler_ipp_id - crawler_ipp_id
+     * @return pool_id - pool_id
      */
-    public Integer getCrawlerIppId() {
-        return crawlerIppId;
+    public Integer getPoolId() {
+        return poolId;
     }
 
     /**
-     * 设置crawler_ipp_id
+     * 设置pool_id
      *
-     * @param crawlerIppId crawler_ipp_id
+     * @param poolId pool_id
      */
-    public void setCrawlerIppId(Integer crawlerIppId) {
-        this.crawlerIppId = crawlerIppId;
+    public void setPoolId(Integer poolId) {
+        this.poolId = poolId;
     }
 
     /**
@@ -343,7 +344,7 @@ public class CrawlerVerifyIp extends BaseEntity {
      *
      * @return create_date - create_date
      */
-    public Long getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
@@ -352,7 +353,7 @@ public class CrawlerVerifyIp extends BaseEntity {
      *
      * @param createDate create_date
      */
-    public void setCreateDate(Long createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
@@ -379,7 +380,7 @@ public class CrawlerVerifyIp extends BaseEntity {
      *
      * @return modify_date - modify_date
      */
-    public Long getModifyDate() {
+    public Date getModifyDate() {
         return modifyDate;
     }
 
@@ -388,7 +389,7 @@ public class CrawlerVerifyIp extends BaseEntity {
      *
      * @param modifyDate modify_date
      */
-    public void setModifyDate(Long modifyDate) {
+    public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 

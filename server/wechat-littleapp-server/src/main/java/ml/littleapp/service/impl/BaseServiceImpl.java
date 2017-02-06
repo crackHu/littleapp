@@ -10,38 +10,44 @@ import tk.mybatis.mapper.common.Mapper;
 
 import com.github.pagehelper.PageHelper;
 
-public class BaseServiceImpl<T extends BaseEntity> implements
-		BaseService<T> {
-
+public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
+	
 	@Inject
-	private Mapper<T> mapper;
+	protected Mapper<T> mapper;
 
 	@Override
-	public List<T> getAll(T t) {
-		if (t.getPage() != null && t.getRows() != null) {
-			PageHelper.startPage(t.getPage(), t.getRows());
+	public List<T> getAll(T t) throws Exception {
+		if (t.getPageNum() != null && t.getPageSize() != null) {
+			PageHelper.startPage(t.getPageNum(), t.getPageSize());
+		}
+		return mapper.selectAll();
+	}
+	
+	@Override
+	public List<T> getAll(Integer pageNum, Integer pageSize) throws Exception {
+		if (pageNum != null && pageSize != null) {
+			PageHelper.startPage(pageNum, pageSize);
 		}
 		return mapper.selectAll();
 	}
 
 	@Override
-	public T getById(Integer id) {
+	public T getById(Integer id) throws Exception {
 		return mapper.selectByPrimaryKey(id);
 	}
 
 	@Override
-	public int deleteById(Integer id) {
+	public int deleteById(Integer id) throws Exception {
 		return mapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
-	public int save(T t) {
+	public int save(T t) throws Exception {
 		return mapper.insert(t);
 	}
 
 	@Override
-	public int update(T t) {
+	public int update(T t) throws Exception {
 		return mapper.updateByPrimaryKey(t);
 	}
-	
 }

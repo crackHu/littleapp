@@ -2,12 +2,18 @@ package ml.littleapp.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import ml.littleapp.model.CrawlerIpSrc;
 import ml.littleapp.service.CrawlerIpSrcService;
+import ml.littleapp.util.IdWorker;
 import ml.littleapp.util.PropertiesUtil;
+import ml.littleapp.vo.WebPage;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.introspector.PropertyUtils;
 
 import tk.mybatis.mapper.entity.Example;
 
@@ -24,7 +30,7 @@ public class CrawlerIpSrcServiceImpl extends BaseServiceImpl<CrawlerIpSrc>
 		List<String> updateList = new ArrayList<String>();
 		List<String> removeList = new ArrayList<String>();
 		CrawlerIpSrc crawlerIpSrc = null;
-		boolean updateListFlag = false;
+		IdWorker idWorker = new IdWorker(); 
 		Example example = new Example(CrawlerIpSrc.class);
 
 		for (CrawlerIpSrc crawlerIpSrc1 : crawlerIpSrcList) {
@@ -40,31 +46,31 @@ public class CrawlerIpSrcServiceImpl extends BaseServiceImpl<CrawlerIpSrc>
 		addList.removeAll(urlList);
 		removeList.addAll(urlList);
 		removeList.removeAll(siteList);
-		if (addList.containsAll(updateList)) {
-			addList.removeAll(updateList);
-			updateListFlag = false;
-		} else if (removeList.containsAll(updateList)) {
-			removeList.removeAll(updateList);
-			updateListFlag = true;
+		for (String update_ : updateList) {
+			if (addList.contains(update_)) {
+				crawlerIpSrc = new CrawlerIpSrc();
+				crawlerIpSrc.setDeleted(false);
+				example.clear();
+				example.createCriteria().andEqualTo("url", update_);
+				super.mapper.updateByExampleSelective(crawlerIpSrc, example);
+				addList.remove(update_);
+			} else if (removeList.contains(update_)) {
+				removeList.removeAll(updateList);
+			}
 		}
 
 		for (String url : addList) {
 			crawlerIpSrc = new CrawlerIpSrc();
-			crawlerIpSrc.setId(System.currentTimeMillis());
+			crawlerIpSrc.setId(idWorker.nextId());
 			crawlerIpSrc.setUrl(url);
+
+			WebPage webPage = new WebPage(url);
+			BeanUtils.copyProperties(webPage.getWPInfo(), crawlerIpSrc);
+			System.out.println("test2");
 			super.mapper.insertSelective(crawlerIpSrc);
 		}
 
-		if (!(addList.isEmpty() && removeList.isEmpty())) {
-			crawlerIpSrc = new CrawlerIpSrc();
-			crawlerIpSrc.setDeleted(updateListFlag);
-			for (String url : updateList) {
-				example.clear();
-				example.createCriteria().andEqualTo("url", url);
-				super.mapper.updateByExampleSelective(crawlerIpSrc, example);
-			}
-		}
-
+		System.out.println("test3");
 		crawlerIpSrc = new CrawlerIpSrc();
 		crawlerIpSrc.setDeleted(true);
 		for (String url : removeList) {

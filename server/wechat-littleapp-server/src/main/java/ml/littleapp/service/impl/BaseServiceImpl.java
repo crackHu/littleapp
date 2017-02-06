@@ -17,7 +17,7 @@ public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
 	@Override
 	public List<T> getAll(T t) throws Exception {
-		if (t.getPageNum() != null && t.getPageSize() != null) {
+		if (t != null && t.getPageNum() != null && t.getPageSize() != null) {
 			PageHelper.startPage(t.getPageNum(), t.getPageSize());
 		}
 		return mapper.selectAll();

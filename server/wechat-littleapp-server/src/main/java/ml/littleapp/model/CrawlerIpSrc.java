@@ -3,6 +3,8 @@ package ml.littleapp.model;
 import java.util.Date;
 import javax.persistence.*;
 
+import ml.littleapp.util.IdWorker;
+
 @Table(name = "crawler_ip_src")
 public class CrawlerIpSrc extends BaseEntity {
     /**
@@ -67,6 +69,11 @@ public class CrawlerIpSrc extends BaseEntity {
      */
     private String content;
 
+    public CrawlerIpSrc() {
+		IdWorker idWorker = new IdWorker();
+		this.id = idWorker.nextId();
+	}
+    
     /**
      * 获取id
      *

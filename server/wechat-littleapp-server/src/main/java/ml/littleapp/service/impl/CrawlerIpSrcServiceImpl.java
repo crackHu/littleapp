@@ -13,7 +13,6 @@ import ml.littleapp.vo.WebPage;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.introspector.PropertyUtils;
 
 import tk.mybatis.mapper.entity.Example;
 
@@ -30,7 +29,6 @@ public class CrawlerIpSrcServiceImpl extends BaseServiceImpl<CrawlerIpSrc>
 		List<String> updateList = new ArrayList<String>();
 		List<String> removeList = new ArrayList<String>();
 		CrawlerIpSrc crawlerIpSrc = null;
-		IdWorker idWorker = new IdWorker(); 
 		Example example = new Example(CrawlerIpSrc.class);
 
 		for (CrawlerIpSrc crawlerIpSrc1 : crawlerIpSrcList) {
@@ -59,18 +57,30 @@ public class CrawlerIpSrcServiceImpl extends BaseServiceImpl<CrawlerIpSrc>
 			}
 		}
 
-		for (String url : addList) {
+		long start1 = System.currentTimeMillis();
+		WebPage webPage = new WebPage(addList);
+		List<WebPage> wpInfo = webPage.getWPInfo();
+		/*for (int i = 0; i < wpInfo.size(); i++) {
 			crawlerIpSrc = new CrawlerIpSrc();
-			crawlerIpSrc.setId(idWorker.nextId());
-			crawlerIpSrc.setUrl(url);
-
-			WebPage webPage = new WebPage(url);
-			BeanUtils.copyProperties(webPage.getWPInfo(), crawlerIpSrc);
-			System.out.println("test2");
+			crawlerIpSrc.setUrl(addList.get(i));
+			BeanUtils.copyProperties(wpInfo.get(i), crawlerIpSrc);
 			super.mapper.insertSelective(crawlerIpSrc);
-		}
+		}*/
+		
+		/*for (String url : addList) {
+			crawlerIpSrc = new CrawlerIpSrc();
+			crawlerIpSrc.setUrl(url);
+-
+			WebPage webPage = new WebPage(url);
+			long start = System.currentTimeMillis();
+			BeanUtils.copyProperties(webPage.getWPInfo(), crawlerIpSrc);
+			long end = System.currentTimeMillis();
+			System.out.println("使用时间："+(end-start)+"ms");
+			super.mapper.insertSelective(crawlerIpSrc);
+		}*/
+		long end1 = System.currentTimeMillis();
+		System.out.println("使用时间："+(end1-start1)+"ms");
 
-		System.out.println("test3");
 		crawlerIpSrc = new CrawlerIpSrc();
 		crawlerIpSrc.setDeleted(true);
 		for (String url : removeList) {

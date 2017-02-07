@@ -9,13 +9,13 @@ import javax.persistence.Transient;
  * @since 2017-01-22 14:40:04
  */
 public class BaseEntity {
-	
+
 	@Transient
 	private Integer pageNum = 1;
-	 
+
 	@Transient
 	private Integer pageSize = 10;
-	
+
 	public Integer getPageNum() {
 		return pageNum;
 	}

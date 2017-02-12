@@ -1,6 +1,8 @@
 package ml.littleapp.vo;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -10,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.ibatis.javassist.convert.TransformReadField;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -21,7 +24,7 @@ public class WebPage implements Callable<WebPage> {
 	private WebPage webPage;
 	private List<String> url;
 	private AtomicInteger urlIndex = new AtomicInteger(0);
-	private int urlIndex1 = 0;
+	private ThreadLocal<Integer> urlIndex1 = new ThreadLocal<Integer>();
 	private String title;
 	private String content;
 
@@ -64,7 +67,7 @@ public class WebPage implements Callable<WebPage> {
 		//Thread.sleep(2000);
 		try {
 			int index = urlIndex.getAndIncrement();
-			document = Jsoup.connect(this.url.get(urlIndex1 ++ )).get();
+			document = Jsoup.connect(this.url.get(urlIndex1.get())).get();
 			String title = document.title();
 			String content = document.select("#body").html();
 			System.out.println("thread" + title);
@@ -90,5 +93,12 @@ public class WebPage implements Callable<WebPage> {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public static void main(String[] args) {
+		Instant instant = Instant.now();
+		DateTimeFormatter isoDate = DateTimeFormatter.ISO_DATE;
+		isoDate.format(instant);
+		System.out.println(instant);
 	}
 }

@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ml.littleapp.model.BaseEntity;
+import com.github.pagehelper.PageHelper;
+
+import ml.littleapp.pojo.BaseEntity;
 import ml.littleapp.service.BaseService;
 import tk.mybatis.mapper.common.Mapper;
 
-import com.github.pagehelper.PageHelper;
-
 public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
-	
+
 	@Inject
 	protected Mapper<T> mapper;
 
@@ -22,7 +22,7 @@ public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 		}
 		return mapper.selectAll();
 	}
-	
+
 	@Override
 	public List<T> getAll(Integer pageNum, Integer pageSize) throws Exception {
 		if (pageNum != null && pageSize != null) {

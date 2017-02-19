@@ -1,8 +1,6 @@
 package ml.littleapp.vo;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -10,9 +8,10 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.ibatis.javassist.convert.TransformReadField;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -24,7 +23,6 @@ public class WebPage implements Callable<WebPage> {
 	private WebPage webPage;
 	private List<String> url;
 	private AtomicInteger urlIndex = new AtomicInteger(0);
-	private ThreadLocal<Integer> urlIndex1 = new ThreadLocal<Integer>();
 	private String title;
 	private String content;
 
@@ -40,37 +38,37 @@ public class WebPage implements Callable<WebPage> {
 	}
 
 	public List<WebPage> getWPInfo() {
-		ExecutorService executorService = Executors.newFixedThreadPool(10);
+		ExecutorService executorService = Executors.newCachedThreadPool();
 		List<FutureTask<WebPage>> futureTasks = new ArrayList<FutureTask<WebPage>>();
 		List<WebPage> webPages = new ArrayList<WebPage>();
-		
+
 		for (int i = 0; i < url.size(); i++) {
 			FutureTask<WebPage> futureTask = new FutureTask<WebPage>(this);
 			futureTasks.add(futureTask);
-			executorService.submit(futureTask);
+			executorService.execute(futureTask);
 		}
 		try {
 			for (FutureTask<WebPage> futureTask : futureTasks) {
-				webPages.add(futureTask.get());
+				webPages.add(futureTask.get(10, TimeUnit.SECONDS));
 			}
-		} catch (InterruptedException | ExecutionException e) {
-			logger.error("getWPInfo error!", e);
+		} catch (InterruptedException | ExecutionException | TimeoutException e) {
+			logger.error("getWPInfo error! detail:" + e.getMessage(), e);
 			e.printStackTrace();
+		} finally {
+			executorService.shutdown();
 		}
-		executorService.shutdown();
 		return webPages;
 	}
 
 	@Override
 	public WebPage call() throws Exception {
 		Document document = null;
-		//Thread.sleep(2000);
 		try {
 			int index = urlIndex.getAndIncrement();
-			document = Jsoup.connect(this.url.get(urlIndex1.get())).get();
+			document = Jsoup.connect(this.url.get(index)).get();
 			String title = document.title();
 			String content = document.select("#body").html();
-			System.out.println("thread" + title);
+			System.out.println("thread[" + index + "]:" + title + "name:" + Thread.currentThread().getName());
 			webPage = new WebPage(title, "asdf");
 		} catch (IOException e) {
 			logger.error("连接失败", e);
@@ -93,12 +91,5 @@ public class WebPage implements Callable<WebPage> {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-	
-	public static void main(String[] args) {
-		Instant instant = Instant.now();
-		DateTimeFormatter isoDate = DateTimeFormatter.ISO_DATE;
-		isoDate.format(instant);
-		System.out.println(instant);
 	}
 }

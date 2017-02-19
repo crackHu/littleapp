@@ -1,9 +1,9 @@
-package ml.littleapp.model;
+package ml.littleapp.pojo;
 
 import javax.persistence.*;
 
-@Table(name = "dictionary_area")
-public class DictionaryArea extends BaseEntity {
+@Table(name = "sys_area")
+public class SysArea extends BaseEntity {
     /**
      * ID
      */
@@ -21,44 +21,20 @@ public class DictionaryArea extends BaseEntity {
      */
     private Integer parentid;
 
-    /**
-     * shortname
-     */
     private String shortname;
 
-    /**
-     * areacode
-     */
     private Integer areacode;
 
-    /**
-     * zipcode
-     */
     private Integer zipcode;
 
-    /**
-     * pinyin
-     */
     private String pinyin;
 
-    /**
-     * lng
-     */
     private String lng;
 
-    /**
-     * lat
-     */
     private String lat;
 
-    /**
-     * level
-     */
     private Boolean level;
 
-    /**
-     * position
-     */
     private String position;
 
     /**
@@ -121,144 +97,112 @@ public class DictionaryArea extends BaseEntity {
     }
 
     /**
-     * 获取shortname
-     *
-     * @return shortname - shortname
+     * @return shortname
      */
     public String getShortname() {
         return shortname;
     }
 
     /**
-     * 设置shortname
-     *
-     * @param shortname shortname
+     * @param shortname
      */
     public void setShortname(String shortname) {
         this.shortname = shortname;
     }
 
     /**
-     * 获取areacode
-     *
-     * @return areacode - areacode
+     * @return areacode
      */
     public Integer getAreacode() {
         return areacode;
     }
 
     /**
-     * 设置areacode
-     *
-     * @param areacode areacode
+     * @param areacode
      */
     public void setAreacode(Integer areacode) {
         this.areacode = areacode;
     }
 
     /**
-     * 获取zipcode
-     *
-     * @return zipcode - zipcode
+     * @return zipcode
      */
     public Integer getZipcode() {
         return zipcode;
     }
 
     /**
-     * 设置zipcode
-     *
-     * @param zipcode zipcode
+     * @param zipcode
      */
     public void setZipcode(Integer zipcode) {
         this.zipcode = zipcode;
     }
 
     /**
-     * 获取pinyin
-     *
-     * @return pinyin - pinyin
+     * @return pinyin
      */
     public String getPinyin() {
         return pinyin;
     }
 
     /**
-     * 设置pinyin
-     *
-     * @param pinyin pinyin
+     * @param pinyin
      */
     public void setPinyin(String pinyin) {
         this.pinyin = pinyin;
     }
 
     /**
-     * 获取lng
-     *
-     * @return lng - lng
+     * @return lng
      */
     public String getLng() {
         return lng;
     }
 
     /**
-     * 设置lng
-     *
-     * @param lng lng
+     * @param lng
      */
     public void setLng(String lng) {
         this.lng = lng;
     }
 
     /**
-     * 获取lat
-     *
-     * @return lat - lat
+     * @return lat
      */
     public String getLat() {
         return lat;
     }
 
     /**
-     * 设置lat
-     *
-     * @param lat lat
+     * @param lat
      */
     public void setLat(String lat) {
         this.lat = lat;
     }
 
     /**
-     * 获取level
-     *
-     * @return level - level
+     * @return level
      */
     public Boolean getLevel() {
         return level;
     }
 
     /**
-     * 设置level
-     *
-     * @param level level
+     * @param level
      */
     public void setLevel(Boolean level) {
         this.level = level;
     }
 
     /**
-     * 获取position
-     *
-     * @return position - position
+     * @return position
      */
     public String getPosition() {
         return position;
     }
 
     /**
-     * 设置position
-     *
-     * @param position position
+     * @param position
      */
     public void setPosition(String position) {
         this.position = position;

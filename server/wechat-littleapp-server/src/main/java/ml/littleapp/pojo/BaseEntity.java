@@ -1,4 +1,4 @@
-package ml.littleapp.model;
+package ml.littleapp.pojo;
 
 import javax.persistence.Transient;
 

@@ -28,8 +28,8 @@
 		<!-- Java接口和实体类 -->
 		<targetJavaProject>${basedir}/src/main/java</targetJavaProject>
 		<targetMapperPackage>ml.littleapp.mapper</targetMapperPackage>
-		<targetModelPackage>ml.littleapp.model</targetModelPackage>
-		<modelRootClass>ml.littleapp.model.BaseEntity</modelRootClass>
+		<targetModelPackage>ml.littleapp.pojo</targetModelPackage>
+		<modelRootClass>ml.littleapp.pojo.BaseEntity</modelRootClass>
 		<!-- XML生成路径 -->
 		<targetResourcesProject>${basedir}/src/main/resources</targetResourcesProject>
 		<targetXMLPackage>mapper</targetXMLPackage>

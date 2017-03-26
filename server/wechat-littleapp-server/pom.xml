@@ -15,7 +15,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.3.RELEASE</version>
+		<version>1.5.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -38,6 +38,8 @@
 		<mapper.version>3.3.9</mapper.version>
 		<pagehelper.version>5.0.0</pagehelper.version>
 		<mysql.version>5.1.40</mysql.version>
+		
+        <jjwt.version>0.7.0</jjwt.version>
 	</properties>
 
 	<dependencies>
@@ -62,6 +64,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.mobile</groupId>
+            <artifactId>spring-mobile-device</artifactId>
+        </dependency>
 		<!-- mapper -->
 		<dependency>
 			<groupId>tk.mybatis</groupId>
@@ -121,6 +131,12 @@
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
 		
 	</dependencies>
 

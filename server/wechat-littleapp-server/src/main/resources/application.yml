@@ -34,6 +34,7 @@ spring:
         testOnBorrow: false
         testWhileIdle: true
         timeBetweenEvictionRunsMillis: 18800
+        
 jwt:
   header: Authorization
   secret: mySecret
@@ -42,6 +43,7 @@ jwt:
     authentication:
       path: auth
       refresh: refresh
+      
 mybatis:
     typeAliasesPackage: ml.littleapp.model
     mapperLocations: classpath:mapper/*.xml

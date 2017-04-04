@@ -9,7 +9,7 @@ public class SysArea extends BaseEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     /**
      * 栏目名
@@ -47,7 +47,7 @@ public class SysArea extends BaseEntity {
      *
      * @return id - ID
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -56,7 +56,7 @@ public class SysArea extends BaseEntity {
      *
      * @param id ID
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

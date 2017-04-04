@@ -13,36 +13,52 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public class JwtUser implements UserDetails {
 
-    private final Long id;
+    /**
+	 * @fieldName: serialVersionUID
+	 * @fieldType: long
+	 * @Description: TODO
+	 */
+	private static final long serialVersionUID = 7737976004796066730L;
+	private final Long id;
     private final String username;
     private final String firstname;
     private final String lastname;
     private final String password;
     private final String email;
     private final Collection<? extends GrantedAuthority> authorities;
-    private final boolean enabled;
     private final Date lastPasswordResetDate;
+    private final Boolean isExpired;
+    private final Boolean isLocked;
+    private final Boolean isCredentialsExpired;
+    private final Boolean isEnabled;
 
-    public JwtUser(
-          Long id,
-          String username,
-          String firstname,
-          String lastname,
-          String email,
-          String password, Collection<? extends GrantedAuthority> authorities,
-          boolean enabled,
-          Date lastPasswordResetDate
-    ) {
-        this.id = id;
-        this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-        this.enabled = enabled;
-        this.lastPasswordResetDate = lastPasswordResetDate;
-    }
+	public JwtUser(
+            Long id,
+            String username,
+            String firstname,
+            String lastname,
+            String email,
+            String password,
+            Collection<? extends GrantedAuthority> authorities,
+            Date lastPasswordResetDate,
+            Boolean isExpired,
+            Boolean isLocked,
+            Boolean isCredentialsExpired,
+            Boolean isEnabled
+      ) {
+          this.id = id;
+          this.username = username;
+          this.firstname = firstname;
+          this.lastname = lastname;
+          this.email = email;
+          this.password = password;
+          this.authorities = authorities;
+  		  this.lastPasswordResetDate = lastPasswordResetDate;
+  		  this.isExpired = isExpired;
+  		  this.isLocked = isLocked;
+  		  this.isCredentialsExpired = isCredentialsExpired;
+  		  this.isEnabled = isEnabled;
+      }
 
     @JsonIgnore
     public Long getId() {
@@ -57,19 +73,19 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return !isExpired;
     }
 
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !isLocked;
     }
 
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return !isCredentialsExpired;
     }
 
     public String getFirstname() {
@@ -97,7 +113,7 @@ public class JwtUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return isEnabled;
     }
 
     @JsonIgnore

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ml.littleapp.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="ml.littleapp.pojo.SysUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="office_id" jdbcType="VARCHAR" property="officeId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="no" jdbcType="VARCHAR" property="no" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="firstname" jdbcType="VARCHAR" property="firstname" />
+    <result column="lastname" jdbcType="VARCHAR" property="lastname" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="user_type" jdbcType="CHAR" property="userType" />
+    <result column="photo" jdbcType="VARCHAR" property="photo" />
+    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+    <result column="login_date" jdbcType="TIMESTAMP" property="loginDate" />
+    <result column="is_expired" jdbcType="BIT" property="isExpired" />
+    <result column="is_locked" jdbcType="BIT" property="isLocked" />
+    <result column="is_credentials_expired" jdbcType="BIT" property="isCredentialsExpired" />
+    <result column="is_enabled" jdbcType="BIT" property="isEnabled" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  
+  <resultMap extends="BaseResultMap" id="ResultMapWithUserAuthority" type="ml.littleapp.dto.UserAuthority">
+    <!-- &amp;lt;result column="enname" property="authorities" typeHandler="ml.littleapp.security.model.AuthorityName"/&amp;gt; -->
+    <collection ofType="String" property="authorities">
+    	<result column="enname" property="authorities" />
+    </collection>
+  </resultMap>
+  
+  <select id="queryByUsername" resultMap="ResultMapWithUserAuthority">
+  	SELECT 
+	  u.*,
+	  UPPER(r.`enname`) enname
+	FROM
+	  sys_user u 
+	  LEFT JOIN sys_user_role ur 
+	    ON ur.`user_id` = u.`id` 
+	  LEFT JOIN sys_role r 
+	    ON r.`id` = ur.`role_id` 
+	WHERE u.`username` = #{username} ;
+  </select>
+  
+</mapper>

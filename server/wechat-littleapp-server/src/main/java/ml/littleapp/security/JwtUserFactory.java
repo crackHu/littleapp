@@ -5,31 +5,35 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import ml.littleapp.security.model.Authority;
-import ml.littleapp.security.model.User;
+
+import ml.littleapp.dto.UserAuthority;
 
 public final class JwtUserFactory {
 
     private JwtUserFactory() {
     }
 
-    public static JwtUser create(User user) {
-        return new JwtUser(
+    public static JwtUser create(UserAuthority user) {
+        JwtUser jwtUser = new JwtUser(
                 user.getId(),
                 user.getUsername(),
                 user.getFirstname(),
                 user.getLastname(),
                 user.getEmail(),
                 user.getPassword(),
-                mapToGrantedAuthorities(user.getAuthorities()),
-                user.getEnabled(),
-                user.getLastPasswordResetDate()
+                mapToGrantedAuthoritiesName(user.getAuthorities()),
+                user.getLastPasswordResetDate(),
+                user.getIsExpired(),
+                user.getIsLocked(),
+                user.getIsCredentialsExpired(),
+                user.getIsEnabled()
         );
+        return jwtUser;
     }
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Authority> authorities) {
+    private static List<GrantedAuthority> mapToGrantedAuthoritiesName(List<String> authorities) {
         return authorities.stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getName().name()))
+                .map(authority -> new SimpleGrantedAuthority(authority))
                 .collect(Collectors.toList());
     }
 }

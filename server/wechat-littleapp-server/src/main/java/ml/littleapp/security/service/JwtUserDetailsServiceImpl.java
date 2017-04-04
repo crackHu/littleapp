@@ -1,14 +1,15 @@
 package ml.littleapp.security.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import ml.littleapp.dto.UserAuthority;
+import ml.littleapp.mapper.SysUserMapper;
 import ml.littleapp.security.JwtUserFactory;
-import ml.littleapp.security.model.User;
-import ml.littleapp.security.repository.UserRepository;
 
 /**
  * Created by stephan on 20.03.16.
@@ -16,17 +17,17 @@ import ml.littleapp.security.repository.UserRepository;
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Inject
+	private SysUserMapper sysUserMapper;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserAuthority user = sysUserMapper.queryByUsername(username);
 
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
-        } else {
-            return JwtUserFactory.create(user);
-        }
-    }
+		if (user == null) {
+			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
+		} else {
+			return JwtUserFactory.create(user);
+		}
+	}
 }

@@ -5,7 +5,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="areaname" jdbcType="VARCHAR" property="areaname" />
     <result column="parentid" jdbcType="INTEGER" property="parentid" />
     <result column="shortname" jdbcType="VARCHAR" property="shortname" />

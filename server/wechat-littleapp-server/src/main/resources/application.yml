@@ -8,8 +8,10 @@ spring:
         active: dev
     redis:
         database: 0
-        host: 127.0.0.1
-        password: 
+        # host: 127.0.0.1
+        # password: 
+        host: 192.168.1.105
+        password: 19941118
         port: 6379
         
         pool: 
@@ -34,14 +36,16 @@ spring:
         testOnBorrow: false
         testWhileIdle: true
         timeBetweenEvictionRunsMillis: 18800
+        
 jwt:
   header: Authorization
-  secret: mySecret
+  secret: 6IOh5rC46ZKi5LiN5piv5Yia
   expiration: 604800
   route:
     authentication:
       path: auth
       refresh: refresh
+      
 mybatis:
     typeAliasesPackage: ml.littleapp.model
     mapperLocations: classpath:mapper/*.xml

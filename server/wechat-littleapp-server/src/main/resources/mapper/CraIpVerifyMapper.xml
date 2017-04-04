@@ -12,6 +12,7 @@
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="district" jdbcType="VARCHAR" property="district" />
     <result column="isp" jdbcType="VARCHAR" property="isp" />
+    <result column="speed" jdbcType="BIGINT" property="speed" />
     <result column="lng" jdbcType="VARCHAR" property="lng" />
     <result column="lat" jdbcType="VARCHAR" property="lat" />
     <result column="verify_url" jdbcType="VARCHAR" property="verifyUrl" />

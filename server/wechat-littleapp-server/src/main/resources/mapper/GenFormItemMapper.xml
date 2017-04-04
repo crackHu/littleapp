@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ml.littleapp.mapper.GenFormItemMapper">
+  <resultMap id="BaseResultMap" type="ml.littleapp.pojo.GenFormItem">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="form_id" jdbcType="BIGINT" property="formId" />
+    <result column="dict_type" jdbcType="BIGINT" property="dictType" />
+    <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="regex" jdbcType="VARCHAR" property="regex" />
+    <result column="is_mandatory" jdbcType="BIT" property="isMandatory" />
+    <result column="is_nan" jdbcType="BIT" property="isNan" />
+    <result column="sort" jdbcType="DECIMAL" property="sort" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+</mapper>

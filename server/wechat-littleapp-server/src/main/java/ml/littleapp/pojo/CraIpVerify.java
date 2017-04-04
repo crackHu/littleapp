@@ -22,6 +22,8 @@ public class CraIpVerify extends BaseEntity {
 
     private String isp;
 
+    private Long speed;
+
     private String lng;
 
     private String lat;
@@ -154,6 +156,20 @@ public class CraIpVerify extends BaseEntity {
      */
     public void setIsp(String isp) {
         this.isp = isp;
+    }
+
+    /**
+     * @return speed
+     */
+    public Long getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed
+     */
+    public void setSpeed(Long speed) {
+        this.speed = speed;
     }
 
     /**

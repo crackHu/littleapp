@@ -6757,63 +6757,6 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Comment>最后登陆时间</a:Comment>
 <a:DataType>datetime</a:DataType>
 </o:Column>
-<<<<<<< HEAD
-<o:Column Id="o281">
-<a:ObjectID>F6714029-924F-4988-912E-3156A075694C</a:ObjectID>
-<a:Name>last_password_reset_date</a:Name>
-<a:Code>last_password_reset_date
-            String lastname,</a:Code>
-<a:CreationDate>1491318424</a:CreationDate>
-<a:Creator>crack</a:Creator>
-<a:ModificationDate>1491318623</a:ModificationDate>
-<a:Modifier>crack</a:Modifier>
-<a:Comment>最后密码重置时间</a:Comment>
-<a:DataType>datetime</a:DataType>
-</o:Column>
-<o:Column Id="o282">
-<a:ObjectID>572D8F29-7406-459A-857A-B390134C99A6</a:ObjectID>
-<a:Name>is_expired</a:Name>
-<a:Code>is_expired</a:Code>
-<a:CreationDate>1491316854</a:CreationDate>
-<a:Creator>crack</a:Creator>
-<a:ModificationDate>1491317369</a:ModificationDate>
-<a:Modifier>crack</a:Modifier>
-<a:Comment>是否账号过期</a:Comment>
-<a:DefaultValue>false</a:DefaultValue>
-<a:DataType>tinyint(1)</a:DataType>
-<a:Length>1</a:Length>
-<a:Mandatory>1</a:Mandatory>
-</o:Column>
-<o:Column Id="o283">
-<a:ObjectID>38FC8017-5D00-4BD4-91F0-95C7F6A2B3F5</a:ObjectID>
-<a:Name>is_locked</a:Name>
-<a:Code>is_locked</a:Code>
-<a:CreationDate>1491316854</a:CreationDate>
-<a:Creator>crack</a:Creator>
-<a:ModificationDate>1491317426</a:ModificationDate>
-<a:Modifier>crack</a:Modifier>
-<a:Comment>是否锁定</a:Comment>
-<a:DefaultValue>false</a:DefaultValue>
-<a:DataType>tinyint(1)</a:DataType>
-<a:Length>1</a:Length>
-<a:Mandatory>1</a:Mandatory>
-</o:Column>
-<o:Column Id="o284">
-<a:ObjectID>3CE7EB49-2033-43C4-A4E0-CC2150C06313</a:ObjectID>
-<a:Name>is_credentials_expired</a:Name>
-<a:Code>is_credentials_expired</a:Code>
-<a:CreationDate>1491316854</a:CreationDate>
-<a:Creator>crack</a:Creator>
-<a:ModificationDate>1491317426</a:ModificationDate>
-<a:Modifier>crack</a:Modifier>
-<a:Comment>是否密码过期</a:Comment>
-<a:DefaultValue>false</a:DefaultValue>
-<a:DataType>tinyint(1)</a:DataType>
-<a:Length>1</a:Length>
-<a:Mandatory>1</a:Mandatory>
-</o:Column>
-<o:Column Id="o285">
-=======
 <o:Column Id="o279">
 <a:ObjectID>F6714029-924F-4988-912E-3156A075694C</a:ObjectID>
 <a:Name>last_password_reset_date</a:Name>

@@ -40,9 +40,9 @@ spring:
 # ----------------------------------------
 # ACTUATOR PROPERTIES
 # ----------------------------------------
-endpoints:
-  info:
-    path: /auth/sys
+endpoints: 
+  enabled: true
+  sensitive: false
         
 jwt:
   enable: false

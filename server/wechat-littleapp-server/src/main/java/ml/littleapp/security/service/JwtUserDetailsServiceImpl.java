@@ -16,6 +16,7 @@ import ml.littleapp.security.JwtUserFactory;
  */
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
+	
 	@Inject
 	private SysUserMapper sysUserMapper;
 	

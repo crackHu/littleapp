@@ -37,7 +37,15 @@ spring:
         testWhileIdle: true
         timeBetweenEvictionRunsMillis: 18800
         
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+endpoints:
+  info:
+    path: /auth/sys
+        
 jwt:
+  enable: false
   header: Authorization
   secret: 6IOh5rC46ZKi5LiN5piv5Yia
   expiration: 604800

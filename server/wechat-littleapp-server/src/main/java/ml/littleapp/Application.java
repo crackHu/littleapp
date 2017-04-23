@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 public class Application {
 
-	@RequestMapping("/auth/test")
+	@RequestMapping("/auth/test1")
 	String home() throws MyException {
 		throw new MyException("test exception");
 	}

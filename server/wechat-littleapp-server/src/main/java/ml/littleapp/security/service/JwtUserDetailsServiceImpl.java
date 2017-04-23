@@ -16,10 +16,9 @@ import ml.littleapp.security.JwtUserFactory;
  */
 @Service
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
-
 	@Inject
 	private SysUserMapper sysUserMapper;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserAuthority user = sysUserMapper.queryByUsername(username);

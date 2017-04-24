@@ -11,19 +11,10 @@
  */
 package ml.littleapp.util;
 
-import java.util.HashMap;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
-import org.apache.tomcat.util.collections.ConcurrentCache;
+import ml.littleapp.pojo.SysOffice;
 
 /**
  * @ClassName: Test
@@ -58,67 +49,135 @@ public class Test {
 
 		public synchronized static LazyLoad getInstance() {
 			if (lazy == null) {
-				return new LazyLoad();
+				System.out.println(1111);
+				lazy = new LazyLoad();
 			}
 			return lazy;
 
 		}
+	}
 
-		public static class La {
-			public La() {
-				System.out.println("La is create");
+	private static class DoubleCheck {
+
+		private DoubleCheck() {
+			System.out.println("doubleCheck create");
+		}
+
+		private static DoubleCheck doubleCheck = null;
+
+		public static DoubleCheck getInstance() {
+			if (doubleCheck == null) {
+				synchronized (DoubleCheck.class) {
+					if (doubleCheck == null) {
+						System.out.println(2222);
+						doubleCheck = new DoubleCheck();
+					}
+				}
 			}
+			return doubleCheck;
 		}
 	}
 
-	public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException {
+	private static class VolatileInstance {
+		private VolatileInstance() {
+			System.out.println("VolatileInstance create");
+		}
 
-		 ConcurrentHashMap<String, Object> map = new ConcurrentHashMap<>();
+		private volatile static  VolatileInstance instance = null;
+
+		public static VolatileInstance getInstance() {
+			if (instance == null) {
+				synchronized (DoubleCheck.class) {
+					if (instance == null) {
+						System.out.println(3333);
+						instance = new VolatileInstance();
+					}
+				}
+			}
+			return instance;
+		}
+	}
+	
+	private static class LazyInnerClass {
+		private LazyInnerClass() {
+			System.out.println("LazyInnerClass create");
+		}
 		
-		Runnable hello = () -> {
-			for (int i = 0; i < 100; i++) {
-				System.out.println(i + " hello " + Thread.currentThread());
+		private static class SingletonHolder {
+			public SingletonHolder() {
+				System.out.println(4444);
 			}
-		};
-		Runnable bye = () -> {
-			for (int i = 0; i < 100; i++) {
-				System.out.println(i + " bye " + Thread.currentThread());
+			public static LazyInnerClass instance = new LazyInnerClass();
+		}
+		
+		public static LazyInnerClass getInstance() {
+			return SingletonHolder.instance;
+		}
+	}
+
+	public static void main(String[] args) {
+
+		// 100000 singleton: 6 | lazySingleton: 11
+		// 20000 * 5 singleton: 1 1 1 2 3 | lazySingleton: 9 11 15 15 16 | double: 4 5 4 5 6 | volatile: 5 6 4 4 4 | lazyclass: 5 6 5 4 4
+
+		Runnable singleton = () -> {
+			long begin = System.currentTimeMillis();
+			for (int i = 0; i < 20000; i++) {
+				Test instance = Test.getInstance();
 			}
+			System.err.println("singleton:" + (System.currentTimeMillis() - begin) + Thread.currentThread().getName());
 		};
 
-		Callable<String> hello1 = () -> {
-			for (int i = 0; i < 100; i++) {
-				System.out.println(i + " hello " + Thread.currentThread());
+		Runnable lazySingleton = () -> {
+			long begin = System.currentTimeMillis();
+			for (int i = 0; i < 20000; i++) {
+				LazyLoad instance = LazyLoad.getInstance();
 			}
-			return "hello1";
+			System.err.println(
+					"lazySingleton:" + (System.currentTimeMillis() - begin) + Thread.currentThread().getName());
 		};
 
-		Callable<String> bye1 = () -> {
-			for (int i = 0; i < 100; i++) {
-				System.out.println(i + " bye " + Thread.currentThread());
+		Runnable doubleCheck = () -> {
+			long begin = System.currentTimeMillis();
+			for (int i = 0; i < 20000; i++) {
+				DoubleCheck instance = DoubleCheck.getInstance();
 			}
-			return "bye1";
+			System.err
+					.println("doubleCheck:" + (System.currentTimeMillis() - begin) + Thread.currentThread().getName());
+		};
+
+		Runnable volatileInstance = () -> {
+			long begin = System.currentTimeMillis();
+			for (int i = 0; i < 20000; i++) {
+				VolatileInstance instance = VolatileInstance.getInstance();
+			}
+			System.err.println(
+					"VolatileInstance:" + (System.currentTimeMillis() - begin) + Thread.currentThread().getName());
 		};
 		
+		Runnable lazyInner = () -> {
+			long begin = System.currentTimeMillis();
+			for (int i = 0; i < 20000; i++) {
+				LazyInnerClass instance = LazyInnerClass.getInstance();
+			}
+			System.err.println(
+					"LazyInnerClass:" + (System.currentTimeMillis() - begin) + Thread.currentThread().getName());
+		};
+
 		ExecutorService service = Executors.newCachedThreadPool();
-		
-		ScheduledExecutorService newScheduledThreadPool = Executors.newScheduledThreadPool(2);
+		try {
+			for (int i = 0; i < 5; i++) {
+				service.submit(singleton);
+				service.submit(lazySingleton);
+				service.submit(doubleCheck);
+				service.submit(volatileInstance);
+				service.submit(lazyInner);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			service.shutdown();
+		}
 
-		FutureTask<String> submit = new FutureTask<>(hello1);
-		FutureTask<String> submit2 = new FutureTask<>(bye1);
-		
-		service.execute(submit);
-		service.execute(submit2);
-
-		// Future<String> submit = service.submit(hello1);
-		// Future<String> submit2 = service.submit(bye1);
-
-		String string1 = submit.get(10, TimeUnit.SECONDS);
-		String string2 = submit2.get(10, TimeUnit.SECONDS);
-
-		System.err.println(string1);
-		System.err.println(string2);
-
-		service.shutdown();
 	}
 }

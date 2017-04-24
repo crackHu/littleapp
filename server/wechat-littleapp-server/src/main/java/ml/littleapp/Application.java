@@ -1,16 +1,15 @@
 package ml.littleapp;
 
-import ml.littleapp.util.MyException;
-import ml.littleapp.util.MyMapper;
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import ml.littleapp.util.MyException;
+import ml.littleapp.util.MyMapper;
 
 @ComponentScan
 @RestController

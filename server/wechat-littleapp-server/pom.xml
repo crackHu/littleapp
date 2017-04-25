@@ -212,6 +212,21 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	<profiles>
+		<profile>
+            <id>dev</id>
+            <properties>
+                <!-- log configuration -->
+                <logback.loglevel>DEBUG</logback.loglevel>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <!-- log configuration -->
+                <logback.loglevel>INFO</logback.loglevel>
+            </properties>
+        </profile>
+	</profiles>
 
 </project>

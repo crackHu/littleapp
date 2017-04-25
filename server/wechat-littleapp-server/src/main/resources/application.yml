@@ -1,15 +1,10 @@
 server: 
     port: 9090
-logging:
-    level:
-        ml.littleapp: DEBUG
 spring: 
     profiles: 
-        active: dev
-    redis:
+        active: prod
+    redis: 
         database: 0
-        # host: 127.0.0.1
-        # password: 
         host: 192.168.1.105
         password: 19941118
         port: 6379
@@ -19,7 +14,12 @@ spring:
             minIdle: 0  
             maxActive: 8  
             maxWait: -1  
-            timeout: 60000   
+            timeout: 60000
+    rabbitmq: 
+        host: 192.168.1.105
+        port: 5672
+        username: guest
+        password: guest
     datasource: 
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/littleapp?useUnicode=true&serverTimezone=UTC&characterEncoding=utf-8&useSSL=false

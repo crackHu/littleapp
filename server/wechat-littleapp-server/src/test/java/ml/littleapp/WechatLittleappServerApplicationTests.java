@@ -1,25 +1,22 @@
 package ml.littleapp;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ml.littleapp.dto.UserAuthority;
 import ml.littleapp.mapper.SysUserMapper;
 import ml.littleapp.pojo.CraIpPool;
 import ml.littleapp.pojo.CraIpSrc;
-import ml.littleapp.pojo.SysOffice;
 import ml.littleapp.pojo.SysUser;
+import ml.littleapp.rabbitmq.Sender;
 import ml.littleapp.service.CraIpPoolService;
 import ml.littleapp.service.impl.CraIpSrcServiceImpl;
-import tk.mybatis.mapper.entity.Example;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,6 +28,9 @@ public class WechatLittleappServerApplicationTests {
 	private CraIpSrcServiceImpl craIpSrcServiceImpl;
 	@Inject
 	private SysUserMapper sysUserMapper;
+	
+	@Inject
+	private Sender sender;
 
 	@Test
 	public void putCache() throws Exception {
@@ -131,6 +131,11 @@ public class WechatLittleappServerApplicationTests {
 		MyUtil<String, String> myUtil = new MyUtil<>();
 		Long value = myUtil.value(() -> 10L);
 		System.out.println("result:" + value);
+	}
+	
+	@Test
+	public void testRabbitMQ() {
+		sender.send();
 	}
 
 	public static void main(String[] args) throws Exception {

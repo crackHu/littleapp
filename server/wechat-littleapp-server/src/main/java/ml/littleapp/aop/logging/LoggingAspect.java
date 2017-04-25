@@ -2,6 +2,8 @@ package ml.littleapp.aop.logging;
 
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -11,6 +13,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import ml.littleapp.mapper.SysLogMapper;
+import ml.littleapp.rabbitmq.Sender;
 
 /**
  * Aspect for logging execution of service and repository Spring components.
@@ -22,8 +27,10 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
-
-
+    
+    @Inject
+    private Sender sender;
+    
     /**
      * Pointcut that matches all repositories, services and Web REST endpoints.
      */
@@ -59,6 +66,7 @@ public class LoggingAspect {
         }
         try {
             Object result = joinPoint.proceed();
+            sendLog(joinPoint, result);
             if (log.isDebugEnabled()) {
                 log.debug("Exit: {}.{}() with result = {}", joinPoint.getSignature().getDeclaringTypeName(),
                     joinPoint.getSignature().getName(), result);
@@ -71,4 +79,16 @@ public class LoggingAspect {
             throw e;
         }
     }
+
+	/**
+	 * @Title: sendLog
+	 * @Description: TODO
+	 * @return: void
+	 */
+	private void sendLog(ProceedingJoinPoint joinPoint, Object result) {
+		String method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName() + "()";
+        String enter = Arrays.toString(joinPoint.getArgs());
+        sender.sendLog(method, enter, result.toString());
+	}
+    
 }

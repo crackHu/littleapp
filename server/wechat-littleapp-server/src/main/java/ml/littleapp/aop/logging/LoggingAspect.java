@@ -31,7 +31,7 @@ public class LoggingAspect {
     private Sender sender;
     
     /**
-     * Pointcut that matches all repositories, services and Web REST endpoints idea merge1.
+     * Pointcut that matches all repositories, services and Web REST endpoints idea merge22234234.
      */
     @Pointcut("within(ml.littleapp.mapper..*) || within(ml.littleapp.service..*) || within(ml.littleapp.web.rest..*)")
     public void loggingPointcut() {

@@ -32,7 +32,7 @@ public class LoggingAspect {
     private Sender sender;
     
     /**
-     * Pointcut that matches all repositories, services and Web REST endpoints.
+     * Pointcut that matches all repositories, services and Web REST endpoints1.
      */
     @Pointcut("within(ml.littleapp.mapper..*) || within(ml.littleapp.service..*) || within(ml.littleapp.web.rest..*)")
     public void loggingPointcut() {

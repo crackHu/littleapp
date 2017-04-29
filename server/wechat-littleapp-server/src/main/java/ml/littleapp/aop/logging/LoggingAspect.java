@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import ml.littleapp.mapper.SysLogMapper;
 import ml.littleapp.rabbitmq.Sender;
 
 /**
@@ -32,7 +31,7 @@ public class LoggingAspect {
     private Sender sender;
     
     /**
-     * Pointcut that matches all repositories, services and Web REST endpoints12.
+     * Pointcut that matches all repositories, services and Web REST endpoints elipse.
      */
     @Pointcut("within(ml.littleapp.mapper..*) || within(ml.littleapp.service..*) || within(ml.littleapp.web.rest..*)")
     public void loggingPointcut() {

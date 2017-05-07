@@ -1,4 +1,4 @@
-package ml.littleapp.aop.logging;
+package ml.littleapp.aop;
 
 import java.util.Arrays;
 
@@ -22,7 +22,7 @@ import ml.littleapp.rabbitmq.Sender;
  * By default, it only runs with the "dev" profile.
  */
 @Aspect
-@Component
+// @Component
 public class LoggingAspect {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());

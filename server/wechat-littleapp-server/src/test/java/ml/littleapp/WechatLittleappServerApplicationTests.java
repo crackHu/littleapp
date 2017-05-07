@@ -1,5 +1,7 @@
 package ml.littleapp;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,14 +11,18 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ml.littleapp.crawler.concurrent.impl.IpSrcCrawler;
 import ml.littleapp.dto.UserAuthority;
+import ml.littleapp.dto.crawler.IpSrcPage;
+import ml.littleapp.mapper.CraIpSrcMapper;
 import ml.littleapp.mapper.SysUserMapper;
 import ml.littleapp.pojo.CraIpPool;
 import ml.littleapp.pojo.CraIpSrc;
 import ml.littleapp.pojo.SysUser;
 import ml.littleapp.rabbitmq.Sender;
 import ml.littleapp.service.CraIpPoolService;
-import ml.littleapp.service.impl.CraIpSrcServiceImpl;
+import ml.littleapp.service.CraIpSrcService;
+import tk.mybatis.mapper.entity.Example;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,7 +31,9 @@ public class WechatLittleappServerApplicationTests {
 	@Inject
 	private CraIpPoolService CraIpPoolService;
 	@Inject
-	private CraIpSrcServiceImpl craIpSrcServiceImpl;
+	private CraIpSrcService ipSrcService;
+	@Inject
+	private CraIpSrcMapper ipSrcMapper;
 	@Inject
 	private SysUserMapper sysUserMapper;
 	
@@ -69,7 +77,16 @@ public class WechatLittleappServerApplicationTests {
 
 	@Test
 	public void testCraIpSrcSave() throws Exception {
-		craIpSrcServiceImpl.saveByIpProperties();
+		ipSrcService.initIpProperties();
+	}
+
+	@Test
+	public void testCraIpSrcUpdate() throws Exception {
+		CraIpSrc ipSrc = new CraIpSrc();
+		ipSrc.setDomain("adsfSDf");
+		Example example = new Example(CraIpSrc.class);
+		example.or().andEqualTo("title", "44");
+		ipSrcMapper.updateByExampleSelective(ipSrc, example);
 	}
 
 	@Test
@@ -77,10 +94,24 @@ public class WechatLittleappServerApplicationTests {
 		CraIpSrc craIpSrc = new CraIpSrc();
 		craIpSrc.setPageNum(2);
 		craIpSrc.setPageSize(2);
-		List<CraIpSrc> all = craIpSrcServiceImpl.getAll(craIpSrc);
-		for (CraIpSrc craIpSrc2 : all) {
-			System.out.println(craIpSrc2.getDomain());
+		// List<CraIpSrc> all = craIpSrcServiceImpl.getAll(craIpSrc);
+		List<CraIpSrc> all = ipSrcService.getAll(null);
+		
+		Object craIpSrc1 = all.get(0);
+		Class<? extends Object> class1 = craIpSrc1.getClass();
+		Class<? extends Object> class2 = CraIpSrc.class;
+		if (class1 == class2) {
+			System.out.println("lalads落地费1");
+		} else {
+			System.out.println("的事发生的1");
 		}
+		if (craIpSrc1 instanceof CraIpSrc) {
+			System.out.println("lalads落地费2");
+		} else {
+			System.out.println("的事发生的2");
+		}
+		
+		all.forEach((a) -> System.out.println(a.getDomain()));
 	}
 
 	@Test
@@ -134,12 +165,39 @@ public class WechatLittleappServerApplicationTests {
 	}
 	
 	@Test
+	public void testStream() {
+		List<String> list = Collections.emptyList();
+		list.add("aaa");
+		list.add("bb");
+		list.add("cc");
+		list.stream().forEach((s) -> System.out.print(s));
+	}
+	
+	@Test
 	public void testRabbitMQ() {
 		sender.send();
+	}
+	
+	@Test
+	public void CommandLineRunner() throws Exception {
+		List<String> domains = ipSrcService.initIpProperties();
+		IpSrcCrawler ipSrcCrawler = new IpSrcCrawler(domains);
+		List<IpSrcPage> ipSrcPages = ipSrcCrawler.run(domains);
+		ipSrcPages.forEach((page) -> System.out.print(page));
 	}
 
 	public static void main(String[] args) throws Exception {
 
-		System.out.println(1234l);
+		List<String> list = new ArrayList<String>();
+		list.add("aaa");
+		list.add("bb");
+		list.add("cc");
+		
+		List<String> list2 = new ArrayList<String>(list);
+		list2.add("ddd");
+		
+		System.out.println(list);
+		System.out.println(list2);
+		
 	}
 }

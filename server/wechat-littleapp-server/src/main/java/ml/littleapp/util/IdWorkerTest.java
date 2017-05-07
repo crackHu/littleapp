@@ -13,7 +13,7 @@ public class IdWorkerTest {
         final IdWorker w = new IdWorker(); 
         final CyclicBarrier cdl = new CyclicBarrier(100); 
 
-        for(int i = 0; i < 100; i++){ 
+        for(int i = 0; i < 200; i++){ 
             new Thread(new Runnable() { 
                 @Override 
                 public void run() { 
@@ -24,7 +24,7 @@ public class IdWorkerTest {
                 } catch (BrokenBarrierException e) { 
                     e.printStackTrace(); 
                 } 
-                System.out.println(w.nextId());} 
+                System.out.println(Thread.currentThread().getName() + "..." + w.nextId());} 
              }).start(); 
         } 
         try { 

@@ -4,6 +4,8 @@ import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 
+import org.springframework.stereotype.Component;
+
 /**
  * <p>
  * 名称：IdWorker.java
@@ -28,6 +30,8 @@ import java.net.NetworkInterface;
  *
  * @author Polim
  */
+
+@Component
 public class IdWorker {
 	// 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动）
 	private final static long twepoch = 1288834974657L;

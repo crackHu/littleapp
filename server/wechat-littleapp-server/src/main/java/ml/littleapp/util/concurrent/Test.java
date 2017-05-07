@@ -9,10 +9,11 @@
  * @date: 2017年4月23日 下午6:49:52
  * @version: V1.0
  */
-package ml.littleapp.util;
+package ml.littleapp.util.concurrent;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import ml.littleapp.pojo.SysOffice;
 
@@ -167,7 +168,7 @@ public class Test {
 		ExecutorService service = Executors.newCachedThreadPool();
 		try {
 			for (int i = 0; i < 5; i++) {
-				service.submit(singleton);
+				Future<?> submit = service.submit(singleton);
 				service.submit(lazySingleton);
 				service.submit(doubleCheck);
 				service.submit(volatileInstance);

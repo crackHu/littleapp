@@ -6,8 +6,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.jsoup.Connection.Request;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeanUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -179,25 +185,30 @@ public class WechatLittleappServerApplicationTests {
 	}
 	
 	@Test
-	public void CommandLineRunner() throws Exception {
+	public void commandLineRunner() throws Exception {
 		List<String> domains = ipSrcService.initIpProperties();
 		IpSrcCrawler ipSrcCrawler = new IpSrcCrawler(domains);
 		List<IpSrcPage> ipSrcPages = ipSrcCrawler.run(domains);
 		ipSrcPages.forEach((page) -> System.out.print(page));
 	}
+	
+	@Test
+	public void testJsoup() {
+		Request request = Jsoup.connect("http://www.xicidaili.com/qq").request();
+	}
+	
+	@Test
+	public void testBeanCopy() {
+		CraIpSrc ipSrc = new CraIpSrc();
+		IpSrcPage ipSrcPage = new IpSrcPage("asdf", "asdf", 2);
+		BeanUtils.copyProperties(ipSrcPage, ipSrc);
+		System.out.println(ipSrc.getTitle() + ipSrc.getContent());
+	}
 
 	public static void main(String[] args) throws Exception {
-
-		List<String> list = new ArrayList<String>();
-		list.add("aaa");
-		list.add("bb");
-		list.add("cc");
-		
-		List<String> list2 = new ArrayList<String>(list);
-		list2.add("ddd");
-		
-		System.out.println(list);
-		System.out.println(list2);
-		
+		Document document = Jsoup.connect("http://www.xicidaili.com/qq").get();
+		Elements select = document.select(".pagination a");
+		Element element = select.get(select.size() - 2);
+		System.out.println(element.text());
 	}
 }

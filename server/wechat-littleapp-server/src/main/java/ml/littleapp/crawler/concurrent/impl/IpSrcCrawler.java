@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import ml.littleapp.crawler.concurrent.ConcurrentCrawler;
 import ml.littleapp.dto.crawler.IpSrcPage;
@@ -31,9 +33,13 @@ public class IpSrcCrawler implements ConcurrentCrawler<IpSrcPage> {
 			Callable<IpSrcPage> crawler = () -> {
 				Document document = crawler(domain);
 				String title = document.title();
-				String content = document.select("#body").html().substring(0, 20);
-				System.out.println("getCallables[" + domain + "]:" + Thread.currentThread().getName());
-				ipSrcPage = new IpSrcPage(title, content);
+				String content = document.select("#body").html();
+				
+				Elements paginations = document.select(".pagination a");
+				Element lastPage = paginations.get(paginations.size() - 2);
+				Integer pageTotal = Integer.valueOf(lastPage.text());
+				
+				ipSrcPage = new IpSrcPage(title, content, pageTotal);
 				return ipSrcPage;
 			};
 			callables.add(crawler);

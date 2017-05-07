@@ -1,16 +1,18 @@
 package ml.littleapp.service.impl;
 
-import java.lang.management.ThreadInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import ml.littleapp.crawler.concurrent.impl.IpSrcCrawler;
@@ -29,12 +31,30 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
+	private static class ExampleHolder {
+		private ExampleHolder() {
+		}
+		
+		public static Example example = new Example(CraIpSrc.class);
+	}
+	
 	@Override
 	public void init() throws Exception {
+		Example example = ExampleHolder.example;
 		List<String> domains = initIpProperties();
 		IpSrcCrawler ipSrcCrawler = new IpSrcCrawler(domains);
 		List<IpSrcPage> ipSrcPages = ipSrcCrawler.run(domains);
-		ipSrcPages.forEach((page) -> System.out.print(page));
+		
+		IntStream.range(0, ipSrcPages.size()).forEach(index -> {
+			String domain = domains.get(index);
+			IpSrcPage ipSrcPage = ipSrcPages.get(index);
+			
+			CraIpSrc ipSrc = new CraIpSrc();
+			BeanUtils.copyProperties(ipSrcPage, ipSrc);
+			example.clear();
+			example.or().andEqualTo("domain", domain);
+			super.mapper.updateByExampleSelective(ipSrc, example);
+		});
 		
 		// cache thread 1365ms
 		// single 1263ms
@@ -54,7 +74,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 		// 需要更新 isDeleted 为 false 的集合
 		List<String> updateList = new ArrayList<String>();
 
-		ipSrcs.forEach((ipSrc) -> {
+		ipSrcs.forEach(ipSrc -> {
 			String domain = ipSrc.getDomain();
 			Boolean deleted = ipSrc.getIsDeleted();
 			if (ipSiteList.contains(domain)) {
@@ -88,7 +108,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 
 		// 2. insertList - 需要插入的集合插入数据库
 		Runnable insertThread = () -> {
-			insertList.forEach((domain) -> {
+			insertList.forEach(domain -> {
 				CraIpSrc ipSrc = new CraIpSrc();
 				ipSrc.setId(idWorker.nextId());
 				ipSrc.setDomain(domain);
@@ -135,9 +155,9 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 		if (domains == null || domains.size() == 0)
 			return;
 
-		Example example = new Example(CraIpSrc.class);
+		Example example = ExampleHolder.example;
 		List<CraIpSrc> list = new ArrayList<CraIpSrc>();
-		domains.forEach((domain) -> {
+		domains.forEach(domain -> {
 			CraIpSrc ipSrc = new CraIpSrc();
 			ipSrc.setIsDeleted(isActive);
 			list.add(ipSrc);
@@ -149,7 +169,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 
 	@Override
 	public void batchUpdate(List<CraIpSrc> list, Example example) {
-		list.forEach((item) -> {
+		list.forEach(item -> {
 			super.mapper.updateByExampleSelective(item, example);
 		});
 	}

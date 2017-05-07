@@ -29,15 +29,16 @@ public interface ConcurrentCrawler<T> {
 		}
 		return document;
 	}
-	
+
 	@ConstStatistics
 	default List<T> execute(List<Callable<T>> callables) {
 
 		List<T> results = new ArrayList<T>();
 		ExecutorService executorService = Executors.newCachedThreadPool();
-		// ExecutorService executorService = Executors.newSingleThreadExecutor();
+		// ExecutorService executorService =
+		// Executors.newSingleThreadExecutor();
 		// ExecutorService executorService = Executors.newFixedThreadPool(1);
-		
+
 		try {
 			callables.forEach((callable) -> {
 				Future<T> future = executorService.submit(callable);
@@ -54,7 +55,7 @@ public interface ConcurrentCrawler<T> {
 		} finally {
 			executorService.shutdown();
 		}
-		
+
 		return results;
 	}
 

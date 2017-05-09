@@ -69,3 +69,17 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
+    
+# ----------------------------------------
+# CRAWLER
+# threadNum: fix | custom | cache
+# ----------------------------------------
+crawler:
+    ip:
+      init:
+        threadNum: cache
+      paging:
+        threadNum: cache
+      verify:
+        threadNum: cache
+    

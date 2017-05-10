@@ -72,14 +72,21 @@ pagehelper:
     
 # ----------------------------------------
 # CRAWLER
-# threadNum: fix | custom | cache
+# threadNum: number | single | auto
 # ----------------------------------------
 crawler:
     ip:
       init:
-        threadNum: cache
+        threadNum: auto
       paging:
-        threadNum: cache
+        threadNum: auto
       verify:
-        threadNum: cache
+        threadNum: auto
+      sources:
+        - http://www.xicidaili.com/qq
+        - http://www.xicidaili.com/wt
+        - http://www.xicidaili.com/wn
+        - http://www.xicidaili.com/nt
+        - http://www.xicidaili.com/nn
+        
     

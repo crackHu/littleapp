@@ -1,13 +1,12 @@
 package ml.littleapp.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -15,11 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import ml.littleapp.config.ApplicationProperties;
 import ml.littleapp.crawler.concurrent.impl.IpSrcCrawler;
 import ml.littleapp.dto.crawler.IpSrcPage;
 import ml.littleapp.pojo.CraIpSrc;
 import ml.littleapp.service.CraIpSrcService;
-import ml.littleapp.util.GetPropertiesUtil;
 import ml.littleapp.util.IdWorker;
 import tk.mybatis.mapper.entity.Example;
 
@@ -28,6 +27,8 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 
 	@Inject
 	private IdWorker idWorker;
+	@Inject
+	private ApplicationProperties applicationProperties;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
@@ -35,7 +36,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 		private ExampleHolder() {
 		}
 		
-		public static Example example = new Example(CraIpSrc.class);
+		public final static Example example = new Example(CraIpSrc.class);
 	}
 	
 	@Override
@@ -65,7 +66,8 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 	@Override
 	public List<String> initIpProperties() throws Exception {
 		List<CraIpSrc> ipSrcs = super.mapper.selectAll();
-		List<String> ipSiteList = GetPropertiesUtil.getIpSites();
+		// List<String> ipSiteList = GetPropertiesUtil.getIpSites();
+		List<String> ipSiteList = Arrays.asList(applicationProperties.getCrawler().getIp().getSources());
 
 		// 需要插入的集合
 		List<String> insertList = new ArrayList<String>(ipSiteList);

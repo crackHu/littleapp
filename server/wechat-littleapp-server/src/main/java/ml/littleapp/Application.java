@@ -3,6 +3,7 @@ package ml.littleapp;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -18,6 +19,7 @@ import ml.littleapp.util.MyMapper;
 @ServletComponentScan
 @EnableAspectJAutoProxy
 @SpringBootApplication
+@EnableConfigurationProperties
 public class Application {
 
 	@RequestMapping("/auth/test1")

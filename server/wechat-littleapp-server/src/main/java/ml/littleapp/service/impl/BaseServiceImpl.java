@@ -9,6 +9,7 @@ import com.github.pagehelper.PageHelper;
 import ml.littleapp.pojo.BaseEntity;
 import ml.littleapp.service.BaseService;
 import tk.mybatis.mapper.common.Mapper;
+import tk.mybatis.mapper.entity.Example;
 
 public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 

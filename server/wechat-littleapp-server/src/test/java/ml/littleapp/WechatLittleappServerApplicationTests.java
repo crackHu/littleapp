@@ -17,6 +17,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ml.littleapp.config.ApplicationConstants;
+import ml.littleapp.config.ApplicationProperties;
 import ml.littleapp.crawler.concurrent.impl.IpSrcCrawler;
 import ml.littleapp.dto.UserAuthority;
 import ml.littleapp.dto.crawler.IpSrcPage;
@@ -43,6 +45,8 @@ public class WechatLittleappServerApplicationTests {
 	@Inject
 	private SysUserMapper sysUserMapper;
 	
+	@Inject
+	private ApplicationProperties applicationProperties;
 	@Inject
 	private Sender sender;
 
@@ -204,11 +208,25 @@ public class WechatLittleappServerApplicationTests {
 		BeanUtils.copyProperties(ipSrcPage, ipSrc);
 		System.out.println(ipSrc.getTitle() + ipSrc.getContent());
 	}
+	
+	public final static class Test1 {
+		private Test1() {
+			// TODO Auto-generated constructor stub
+		}
+		
+		public final static String a = new String("sdf");
+	}
+	
+	@Test
+	public void testConfig() {
+		System.out.println(applicationProperties);
+	}
 
 	public static void main(String[] args) throws Exception {
-		Document document = Jsoup.connect("http://www.xicidaili.com/qq").get();
-		Elements select = document.select(".pagination a");
-		Element element = select.get(select.size() - 2);
-		System.out.println(element.text());
+//		Document document = Jsoup.connect("http://www.xicidaili.com/qq").get();
+//		Elements select = document.select(".pagination a");
+//		Element element = select.get(select.size() - 2);
+//		System.out.println(element.text());
+		
 	}
 }

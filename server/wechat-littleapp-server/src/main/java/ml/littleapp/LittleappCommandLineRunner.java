@@ -5,11 +5,11 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import ml.littleapp.service.CraIpSrcService;
 
-@Component
+@Configuration
 public class LittleappCommandLineRunner implements CommandLineRunner {
 
 	@Inject

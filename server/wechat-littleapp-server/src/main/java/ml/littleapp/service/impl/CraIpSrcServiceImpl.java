@@ -4,22 +4,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 import javax.inject.Inject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import ml.littleapp.config.ApplicationProperties;
+import ml.littleapp.config.ApplicationProperties.Crawler.Ip.Init;
 import ml.littleapp.crawler.concurrent.impl.IpSrcCrawler;
 import ml.littleapp.dto.crawler.IpSrcPage;
 import ml.littleapp.pojo.CraIpSrc;
 import ml.littleapp.service.CraIpSrcService;
 import ml.littleapp.util.IdWorker;
+import ml.littleapp.util.concurrent.ExecutorHelper;
 import tk.mybatis.mapper.entity.Example;
 
 @Service
@@ -32,7 +34,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
-	private static class ExampleHolder {
+	private final static class ExampleHolder {
 		private ExampleHolder() {
 		}
 		
@@ -104,12 +106,14 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 
 		// 1. updateList - 如果需要插入的集合元素存在数据库切已经删除，需要更新为不删除
 		Runnable updateThread = () -> {
+			System.out.println("updateList:" + Thread.currentThread().getName());
 			batchModifyActiveOrNotByDomains(updateList, false);
 			countDownLatch.countDown();
 		};
 
 		// 2. insertList - 需要插入的集合插入数据库
 		Runnable insertThread = () -> {
+			System.out.println("insertThread:" + Thread.currentThread().getName());
 			insertList.forEach(domain -> {
 				CraIpSrc ipSrc = new CraIpSrc();
 				ipSrc.setId(idWorker.nextId());
@@ -121,6 +125,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 
 		// 3. deleteList - 需要删除的集合从数据库中删除
 		Runnable deleteThread = () -> {
+			System.out.println("deleteList:" + Thread.currentThread().getName());
 			batchModifyActiveOrNotByDomains(deleteList, true);
 			countDownLatch.countDown();
 		};
@@ -128,10 +133,18 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 		ExecutorService executorService = Executors.newCachedThreadPool();
 		// executorService = Executors.newSingleThreadExecutor();
 		// executorService = Executors.newFixedThreadPool(1);
+		
+		Init init = applicationProperties.getCrawler().getIp().getInit();
+		Executor executor = ExecutorHelper.executor(init.getThreadNum());
+		
 		try {
-			executorService.submit(updateThread);
-			executorService.submit(insertThread);
-			executorService.submit(deleteThread);
+//			executorService.submit(updateThread);
+//			executorService.submit(insertThread);
+//			executorService.submit(deleteThread);
+			
+			executor.execute(updateThread);
+			executor.execute(insertThread);
+			executor.execute(deleteThread);
 			// countDownLatch.await();
 		} catch (Exception e) {
 			log.error("initIpProperties concurrency error", e);

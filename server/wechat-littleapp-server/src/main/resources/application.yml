@@ -72,7 +72,7 @@ pagehelper:
     
 # ----------------------------------------
 # CRAWLER
-# threadNum: number | single | auto
+# threadNum: number | 'single' | 'auto'
 # ----------------------------------------
 crawler:
     ip:

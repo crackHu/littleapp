@@ -3,6 +3,9 @@ package ml.littleapp.util.concurrent;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ml.littleapp.config.ThreadNum;
 
 public final class ExecutorHelper {
@@ -12,9 +15,9 @@ public final class ExecutorHelper {
 
 	public static Executor executor(String threadNum) {
 		if (threadNum != null) {
-			if (threadNum.equals(ThreadNum.SINGLE)) {
+			if (threadNum.equals(ThreadNum.SINGLE.getnThreads())) {
 				return Executors.newSingleThreadExecutor();
-			} else if (threadNum.equals(ThreadNum.AUTO)) {
+			} else if (threadNum.equals(ThreadNum.AUTO.getnThreads())) {
 				return Executors.newCachedThreadPool();
 			} else {
 				try {
@@ -26,9 +29,4 @@ public final class ExecutorHelper {
 		}
 		return Executors.newCachedThreadPool();
 	}
-	
-	public static void main(String[] args) {
-		Executor executor = ExecutorHelper.executor("auto");
-	}
-
 }

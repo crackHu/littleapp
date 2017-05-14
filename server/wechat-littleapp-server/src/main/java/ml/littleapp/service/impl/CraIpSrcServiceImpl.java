@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
+
 import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import ml.littleapp.annotation.ConstStatistics;
 import ml.littleapp.config.ApplicationProperties;
 import ml.littleapp.config.ApplicationProperties.Crawler.Ip.Init;
+import ml.littleapp.config.EntityExample;
 import ml.littleapp.crawler.concurrent.impl.IpSrcCrawler;
 import ml.littleapp.dto.crawler.IpSrcPage;
 import ml.littleapp.pojo.CraIpSrc;
@@ -33,21 +36,15 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 	private ApplicationProperties applicationProperties;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	
-	private final static class ExampleHolder {
-		private ExampleHolder() {
-		}
-		
-		public final static Example example = new Example(CraIpSrc.class);
-	}
-	
+	private final Example example = EntityExample.ExampleHolder.getInstance(CraIpSrc.class);
+
 	@Override
+	@ConstStatistics
 	public void init() throws Exception {
-		Example example = ExampleHolder.example;
 		List<String> domains = initIpProperties();
 		IpSrcCrawler ipSrcCrawler = new IpSrcCrawler(domains);
-		List<IpSrcPage> ipSrcPages = ipSrcCrawler.run(domains);
-		
+		List<IpSrcPage> ipSrcPages = ipSrcCrawler.run(domains, getInitProperties().getThreadNum());
+
 		IntStream.range(0, ipSrcPages.size()).forEach(index -> {
 			String domain = domains.get(index);
 			IpSrcPage ipSrcPage = ipSrcPages.get(index);
@@ -58,7 +55,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 			example.or().andEqualTo("domain", domain);
 			super.mapper.updateByExampleSelective(ipSrc, example);
 		});
-		
+
 		// cache thread 1365ms
 		// single 1263ms
 		// fix one 1287ms
@@ -66,6 +63,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 	}
 
 	@Override
+	@ConstStatistics
 	public List<String> initIpProperties() throws Exception {
 		List<CraIpSrc> ipSrcs = super.mapper.selectAll();
 		// List<String> ipSiteList = GetPropertiesUtil.getIpSites();
@@ -131,20 +129,16 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 		};
 
 		ExecutorService executorService = Executors.newCachedThreadPool();
-		// executorService = Executors.newSingleThreadExecutor();
-		// executorService = Executors.newFixedThreadPool(1);
-		
-		Init init = applicationProperties.getCrawler().getIp().getInit();
-		Executor executor = ExecutorHelper.executor(init.getThreadNum());
-		
+		executorService = ExecutorHelper.executor(getInitProperties().getThreadNum());
+
 		try {
-//			executorService.submit(updateThread);
-//			executorService.submit(insertThread);
-//			executorService.submit(deleteThread);
+			if (updateList.size() > 0)
+				executorService.submit(updateThread);
+			if (insertList.size() > 0)
+				executorService.submit(insertThread);
+			if (deleteList.size() > 0)
+				executorService.submit(deleteThread);
 			
-			executor.execute(updateThread);
-			executor.execute(insertThread);
-			executor.execute(deleteThread);
 			// countDownLatch.await();
 		} catch (Exception e) {
 			log.error("initIpProperties concurrency error", e);
@@ -166,11 +160,15 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 		// System.out.println("使用时间：" + (end1 - start1) + "ms");
 	}
 
+	@ConstStatistics
+	private Init getInitProperties() {
+		return applicationProperties.getCrawler().getIp().getInit();
+	}
+
 	private void batchModifyActiveOrNotByDomains(List<String> domains, Boolean isActive) {
 		if (domains == null || domains.size() == 0)
 			return;
 
-		Example example = ExampleHolder.example;
 		List<CraIpSrc> list = new ArrayList<CraIpSrc>();
 		domains.forEach(domain -> {
 			CraIpSrc ipSrc = new CraIpSrc();

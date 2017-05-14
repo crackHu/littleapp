@@ -4,13 +4,11 @@ public class Page {
 
 	private String title;
 	private String content;
-	private Integer pageTotal;
 
-	public Page(String title, String content, Integer pageTotal) {
+	public Page(String title, String content) {
 		super();
 		this.title = title;
 		this.content = content;
-		this.pageTotal = pageTotal;
 	}
 
 	public String getTitle() {
@@ -29,16 +27,8 @@ public class Page {
 		this.content = content;
 	}
 
-	public Integer getPageTotal() {
-		return pageTotal;
-	}
-
-	public void setPageTotal(Integer pageTotal) {
-		this.pageTotal = pageTotal;
-	}
-
 	@Override
 	public String toString() {
-		return "Page [title=" + title + ", pageTotal=" + pageTotal + "]";
+		return "Page [title=" + title + ", content=" + content == null ? "null" : content.substring(20) + "]";
 	}
 }

@@ -1,5 +1,9 @@
 package ml.littleapp;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -23,7 +27,17 @@ public class LittleappCommandLineRunner implements CommandLineRunner {
 
 		long start = System.currentTimeMillis();
 
-		ipSrcService.init();
+		ScheduledExecutorService scheduled = Executors.newScheduledThreadPool(1);
+		scheduled.scheduleWithFixedDelay(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					ipSrcService.init();
+				} catch (Exception e) {
+					log.error("LittleappCommandLineRunner init error", e);
+				}
+			}
+		}, 5, 10, TimeUnit.SECONDS);
 
 		long end = System.currentTimeMillis();
 		log.info("LittleappCommandLineRunner finished, cost {}", (end - start) + "ms");

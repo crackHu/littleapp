@@ -2,50 +2,45 @@ package ml.littleapp.crawler.concurrent.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.google.common.collect.Maps;
-
 import ml.littleapp.crawler.concurrent.ConcurrentCrawler;
-import ml.littleapp.dto.crawler.IpSrcPage;
+import ml.littleapp.dto.crawler.IpSrcPagingPage;
 
-public class IpSrcCrawler implements ConcurrentCrawler<IpSrcPage> {
+public class IpSrcPagingCrawler implements ConcurrentCrawler<IpSrcPagingPage> {
 
-	private IpSrcPage ipSrcPage = null;
+	private IpSrcPagingPage ipSrcPaging = null;
 	private List<String> domains = null;
 
-	public IpSrcCrawler(String domain) {
+	public IpSrcPagingCrawler(String domain) {
 		this.domains = Arrays.asList(domain);
 	}
-	
-	public IpSrcCrawler(List<String> domains) {
+
+	public IpSrcPagingCrawler(List<String> domains) {
 		this.domains = domains;
 	}
 
 	@Override
-	public List<Callable<IpSrcPage>> getCallables() {
+	public List<Callable<IpSrcPagingPage>> getCallables() {
 
-		List<Callable<IpSrcPage>> callables = new ArrayList<Callable<IpSrcPage>>();
+		List<Callable<IpSrcPagingPage>> callables = new ArrayList<Callable<IpSrcPagingPage>>();
 		domains.forEach((domain) -> {
-			Callable<IpSrcPage> crawler = () -> {
+			Callable<IpSrcPagingPage> crawler = () -> {
 				Document document = crawler(domain);
 				String title = document.title();
 				String content = document.select("#body").html();
-				
+
 				Elements paginations = document.select(".pagination a");
 				Element lastPage = paginations.get(paginations.size() - 2);
 				Integer pageTotal = Integer.valueOf(lastPage.text());
-				
-				ipSrcPage = new IpSrcPage(title, content, pageTotal);
-				return ipSrcPage;
+
+				ipSrcPaging = new IpSrcPagingPage(title, content, pageTotal);
+				return ipSrcPaging;
 			};
 			callables.add(crawler);
 		});

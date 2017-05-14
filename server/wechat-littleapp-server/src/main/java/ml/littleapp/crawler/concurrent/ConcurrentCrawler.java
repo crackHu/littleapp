@@ -6,38 +6,33 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.stereotype.Component;
 
-import ml.littleapp.annotation.ConstStatistics;
+import ml.littleapp.util.concurrent.ExecutorHelper;
 
+@Component
 public interface ConcurrentCrawler<T> {
 
 	List<Callable<T>> getCallables();
 
-	@ConstStatistics
 	default Document crawler(String domain) {
 		Document document = null;
 		try {
 			document = Jsoup.connect(domain).get();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return document;
 	}
 
-	@ConstStatistics
-	default List<T> execute(List<Callable<T>> callables) {
+	default List<T> execute(List<Callable<T>> callables, String threadNum) {
 
 		List<T> results = new ArrayList<T>();
-		ExecutorService executorService = Executors.newCachedThreadPool();
-		// ExecutorService executorService =
-		// Executors.newSingleThreadExecutor();
-		// ExecutorService executorService = Executors.newFixedThreadPool(1);
+		ExecutorService executorService = ExecutorHelper.executor(threadNum);
 
 		try {
 			callables.forEach((callable) -> {
@@ -59,8 +54,7 @@ public interface ConcurrentCrawler<T> {
 		return results;
 	}
 
-	@ConstStatistics
-	default List<T> run(List<String> domains) {
-		return execute(getCallables());
+	default List<T> run(List<String> domains, String threadNum) {
+		return execute(getCallables(), threadNum);
 	};
 }

@@ -10,6 +10,8 @@ import java.util.concurrent.Future;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import ml.littleapp.util.concurrent.ExecutorHelper;
@@ -17,14 +19,17 @@ import ml.littleapp.util.concurrent.ExecutorHelper;
 @Component
 public interface ConcurrentCrawler<T> {
 
+	final Logger log = LoggerFactory.getLogger(ConcurrentCrawler.class);
+	
 	List<Callable<T>> getCallables();
 
 	default Document crawler(String domain) {
+		log.info("爬取：{} ……", domain);
 		Document document = null;
 		try {
 			document = Jsoup.connect(domain).get();
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		}
 		return document;
 	}
@@ -33,20 +38,18 @@ public interface ConcurrentCrawler<T> {
 
 		List<T> results = new ArrayList<T>();
 		ExecutorService executorService = ExecutorHelper.executor(threadNum);
-
+		
 		try {
 			callables.forEach((callable) -> {
 				Future<T> future = executorService.submit(callable);
 				try {
 					results.add(future.get());
 				} catch (InterruptedException | ExecutionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error(e.getMessage(), e);
 				}
 			});
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 		} finally {
 			executorService.shutdown();
 		}

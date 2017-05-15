@@ -36,8 +36,12 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 	private ApplicationProperties applicationProperties;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private final Example example = EntityExample.ExampleHolder.getInstance(CraIpSrc.class);
-
+	private Example example = null;
+	
+	{
+		example = new Example(CraIpSrc.class);
+	}
+	
 	@Override
 	@ConstStatistics
 	public void init() throws Exception {
@@ -55,7 +59,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 			example.or().andEqualTo("domain", domain);
 			super.mapper.updateByExampleSelective(ipSrc, example);
 		});
-
+		
 		// cache thread 1365ms
 		// single 1263ms
 		// fix one 1287ms

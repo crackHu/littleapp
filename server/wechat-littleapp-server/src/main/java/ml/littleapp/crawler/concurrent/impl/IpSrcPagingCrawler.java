@@ -38,7 +38,7 @@ public class IpSrcPagingCrawler implements ConcurrentCrawler<IpSrcPagingPage> {
 				Elements paginations = document.select(".pagination a");
 				Element lastPage = paginations.get(paginations.size() - 2);
 				Integer pageTotal = Integer.valueOf(lastPage.text());
-
+				
 				ipSrcPaging = new IpSrcPagingPage(title, content, pageTotal);
 				return ipSrcPaging;
 			};

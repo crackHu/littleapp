@@ -23,11 +23,10 @@ public class CraIpSrcPagingServiceImpl extends BaseServiceImpl<CraIpSrcPaging> i
 	private ApplicationProperties applicationProperties;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private final Example example = EntityExample.ExampleHolder.getInstance(CraIpSrc.class);
+	private final Example example = EntityExample.ExampleHolder.getInstance(CraIpSrcPaging.class);
 	
 	@Override
 	public void paging() throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 }

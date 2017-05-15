@@ -1,18 +1,19 @@
 package ml.littleapp.config;
 
+import ml.littleapp.pojo.CraIpSrc;
 import tk.mybatis.mapper.entity.Example;
 
 public final class EntityExample {
 
+
 	private EntityExample() {
 	}
 
-	public final static class ExampleHolder {
-		private ExampleHolder() {
-		}
-
-		public final static Example getInstance(Class<?> entityClass) {
-			return new Example(entityClass);
-		}
+	public static class ExampleHolder {
+		public static Example instance = new Example(CraIpSrc.class);
+	}
+	
+	public static Example getInstance() {
+		return  ExampleHolder.instance;
 	}
 }

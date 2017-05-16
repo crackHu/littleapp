@@ -36,11 +36,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 	private ApplicationProperties applicationProperties;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
-	private Example example = null;
-	
-	{
-		example = new Example(CraIpSrc.class);
-	}
+	private Example example = null; // new Example(CraIpSrc.class)
 	
 	@Override
 	@ConstStatistics
@@ -55,6 +51,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 			
 			CraIpSrc ipSrc = new CraIpSrc();
 			BeanUtils.copyProperties(ipSrcPage, ipSrc);
+			example = new Example(CraIpSrc.class);
 			example.clear();
 			example.or().andEqualTo("domain", domain);
 			super.mapper.updateByExampleSelective(ipSrc, example);

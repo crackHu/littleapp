@@ -28,14 +28,14 @@
 		<!-- Java接口和实体类 -->
 		<targetJavaProject>${basedir}/src/main/java</targetJavaProject>
 		<targetMapperPackage>ml.littleapp.mapper</targetMapperPackage>
-		<targetModelPackage>ml.littleapp.pojo</targetModelPackage>
+		<targetModelPackage>ml.littleapp.domain</targetModelPackage>
 		<modelRootClass>ml.littleapp.pojo.BaseEntity</modelRootClass>
 		<!-- XML生成路径 -->
 		<targetResourcesProject>${basedir}/src/main/resources</targetResourcesProject>
 		<targetXMLPackage>mapper</targetXMLPackage>
 		<!-- 依赖版本 -->
 		<mbg.version>1.3.5</mbg.version>
-		<mapper.version>3.3.9</mapper.version>
+		<mapper.version>3.4.0</mapper.version>
 		<pagehelper.version>5.0.0</pagehelper.version>
 		<mysql.version>5.1.40</mysql.version>
 		

@@ -1,5 +1,6 @@
 package ml.littleapp;
 
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -11,13 +12,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
-import ml.littleapp.service.CraIpSrcService;
+import ml.littleapp.service.impl.CraIpSrcServiceImpl;
 
 @Configuration
 public class LittleappCommandLineRunner implements CommandLineRunner {
 
 	@Inject
-	private CraIpSrcService ipSrcService;
+	private CraIpSrcServiceImpl ipSrcServiceImpl;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -32,13 +33,14 @@ public class LittleappCommandLineRunner implements CommandLineRunner {
 			@Override
 			public void run() {
 				try {
-					ipSrcService.init();
+					ipSrcServiceImpl.init();
+					log.info("努力😡");
 				} catch (Exception e) {
 					log.error("LittleappCommandLineRunner init error", e);
 				}
 			}
 		}, 5, 10, TimeUnit.SECONDS);
-
+		
 		long end = System.currentTimeMillis();
 		log.info("LittleappCommandLineRunner finished, cost {}", (end - start) + "ms");
 	}

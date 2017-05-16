@@ -34,7 +34,8 @@ public class IpSrcCrawler implements ConcurrentCrawler<IpSrcPage> {
 	public List<Callable<IpSrcPage>> getCallables() {
 
 		List<Callable<IpSrcPage>> callables = new ArrayList<Callable<IpSrcPage>>();
-		domains.forEach((domain) -> {
+		
+		domains.forEach(domain -> {
 			Callable<IpSrcPage> crawler = () -> {
 				Document document = crawler(domain);
 				String title = document.title();

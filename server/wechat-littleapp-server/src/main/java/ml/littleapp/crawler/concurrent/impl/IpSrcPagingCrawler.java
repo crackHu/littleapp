@@ -1,7 +1,6 @@
 package ml.littleapp.crawler.concurrent.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -11,10 +10,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.util.Assert;
 
-import ml.littleapp.crawler.concurrent.ConcurrentCrawler;
+import ml.littleapp.crawler.concurrent.Concurrent;
+import ml.littleapp.crawler.concurrent.Crawler;
 import ml.littleapp.dto.crawler.IpSrcPagingPage;
 
-public class IpSrcPagingCrawler implements ConcurrentCrawler<IpSrcPagingPage> {
+public class IpSrcPagingCrawler implements Concurrent<IpSrcPagingPage>, Crawler {
 
 	private IpSrcPagingPage ipSrcPaging = null;
 	private List<Map<String, Object>> domainPageTotals = null;
@@ -38,15 +38,17 @@ public class IpSrcPagingCrawler implements ConcurrentCrawler<IpSrcPagingPage> {
 				Assert.hasText(query, "query is invalid");
 				Assert.notNull(pageTotal, "pageTotal is invalid");
 				
+				domain = domain + "/" + query;
+				
 				Document document = crawler(domain);
 				String title = document.title();
 				String content = document.select("#body").html();
 
 				Elements paginations = document.select(".pagination a");
 				Element lastPage = paginations.get(paginations.size() - 2);
-				Integer pageTotal = Integer.valueOf(lastPage.text());
+				Integer pageNo = Integer.valueOf(lastPage.text());
 				
-				ipSrcPaging = new IpSrcPagingPage(title, content, pageTotal);
+				ipSrcPaging = new IpSrcPagingPage(title, content, pageNo);
 				return ipSrcPaging;
 			};
 			callables.add(crawler);

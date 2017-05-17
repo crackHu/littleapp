@@ -2,22 +2,18 @@ package ml.littleapp.crawler.concurrent.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.google.common.collect.Maps;
-
-import ml.littleapp.crawler.concurrent.ConcurrentCrawler;
+import ml.littleapp.crawler.concurrent.Concurrent;
+import ml.littleapp.crawler.concurrent.Crawler;
 import ml.littleapp.dto.crawler.IpSrcPage;
 
-public class IpSrcCrawler implements ConcurrentCrawler<IpSrcPage> {
+public class IpSrcCrawler implements Concurrent<IpSrcPage>, Crawler {
 
 	private IpSrcPage ipSrcPage = null;
 	private List<String> domains = null;

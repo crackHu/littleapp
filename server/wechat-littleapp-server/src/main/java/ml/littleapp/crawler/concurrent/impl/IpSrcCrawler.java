@@ -2,9 +2,11 @@ package ml.littleapp.crawler.concurrent.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -30,18 +32,20 @@ public class IpSrcCrawler implements Concurrent<IpSrcPage>, Crawler {
 	public List<Callable<IpSrcPage>> getCallables() {
 
 		List<Callable<IpSrcPage>> callables = new ArrayList<Callable<IpSrcPage>>();
+		String[] pattern = new String[]{"yy-MM-dd HH:mm"};
 		
 		domains.forEach(domain -> {
 			Callable<IpSrcPage> crawler = () -> {
 				Document document = crawler(domain);
 				String title = document.title();
 				String content = document.select("#body").html();
+				Date gmtModified = DateUtils.parseDate(document.select("#ip_list .odd").get(0).select("td").last().text(), pattern);
 				
 				Elements paginations = document.select(".pagination a");
 				Element lastPage = paginations.get(paginations.size() - 2);
 				Integer pageTotal = Integer.valueOf(lastPage.text());
 				
-				ipSrcPage = new IpSrcPage(title, content, pageTotal);
+				ipSrcPage = new IpSrcPage(title, content, gmtModified, pageTotal);
 				return ipSrcPage;
 			};
 			callables.add(crawler);

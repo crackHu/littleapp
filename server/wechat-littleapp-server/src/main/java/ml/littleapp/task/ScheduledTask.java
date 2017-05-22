@@ -18,6 +18,6 @@ public class ScheduledTask {
 	public void execute() throws Exception {
 //		jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
 //		jobLauncher.run(importJob, jobParameters);
-		System.out.println(System.currentTimeMillis());
+		System.out.println("lala" + System.currentTimeMillis());
 	}
 }

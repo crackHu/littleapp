@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ml.littleapp.config.BatchConfiguration;
 import ml.littleapp.util.MyException;
 import ml.littleapp.util.MyMapper;
 
@@ -30,6 +31,9 @@ public class Application {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		// SpringApplication.run(Application.class, args);
+		
+		System.exit(SpringApplication.exit(SpringApplication.run(
+		         BatchConfiguration.class, args)));
 	}
 }

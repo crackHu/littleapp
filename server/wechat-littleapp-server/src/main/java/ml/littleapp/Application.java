@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ import ml.littleapp.util.MyMapper;
 @EnableScheduling
 @MapperScan(basePackages = { "ml.littleapp.mapper" }, markerInterface = MyMapper.class)
 @ServletComponentScan
+@EnableAsync
 @EnableAspectJAutoProxy
 @SpringBootApplication
 @EnableConfigurationProperties
@@ -31,9 +33,9 @@ public class Application {
 	}
 
 	public static void main(String[] args) {
-		// SpringApplication.run(Application.class, args);
+		SpringApplication.run(Application.class, args);
 		
-		System.exit(SpringApplication.exit(SpringApplication.run(
-		         BatchConfiguration.class, args)));
+		// System.exit(SpringApplication.exit(SpringApplication.run(
+		//          BatchConfiguration.class, args)));
 	}
 }

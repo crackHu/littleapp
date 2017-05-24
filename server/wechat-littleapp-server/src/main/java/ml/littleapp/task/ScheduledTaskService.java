@@ -27,7 +27,7 @@ public class ScheduledTaskService {
 //		System.out.println("lala" + System.currentTimeMillis());
 	}
 	
-	@Async("哈哈")
+	@Async
 	public void testAsync() {
 		System.out.println("Execute testAsync asynchronously - "  
 			      + Thread.currentThread().getName());  
@@ -42,7 +42,7 @@ public class ScheduledTaskService {
 		System.out.println("异步执行…………" + (end - start) + Thread.currentThread().getName());
 	}
 	
-	@Async("sdfasdf")
+	@Async
 	public Future<String> testResultAsync() {
 		System.out.println("Execute testResultAsync asynchronously - "  
 			      + Thread.currentThread().getName());  

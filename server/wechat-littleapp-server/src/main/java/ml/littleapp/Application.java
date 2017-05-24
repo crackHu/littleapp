@@ -1,5 +1,10 @@
 package ml.littleapp;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
+import javax.inject.Inject;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ml.littleapp.config.BatchConfiguration;
+import ml.littleapp.task.ScheduledTaskService;
 import ml.littleapp.util.MyException;
 import ml.littleapp.util.MyMapper;
 
@@ -27,9 +32,27 @@ import ml.littleapp.util.MyMapper;
 @EnableConfigurationProperties
 public class Application {
 
+	@Inject
+	private ScheduledTaskService scheduledTaskService;
+	
 	@RequestMapping("/auth/test1")
 	String home() throws MyException {
-		throw new MyException("test exception");
+		scheduledTaskService.testAsync();
+		System.out.println("aaaaa" + System.currentTimeMillis());
+		Future<String> future = scheduledTaskService.testResultAsync();
+		String result = null;
+		try {
+			System.out.println("bbbbb" + System.currentTimeMillis());
+			result = future.get();
+			System.out.println("cccc" + System.currentTimeMillis());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public static void main(String[] args) {

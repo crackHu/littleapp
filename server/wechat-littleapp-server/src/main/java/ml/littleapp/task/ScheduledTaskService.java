@@ -1,13 +1,15 @@
 package ml.littleapp.task;
 
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ScheduledTask {
+public class ScheduledTaskService {
 
 //    @Autowired
 //    JobLauncher jobLauncher;
@@ -21,12 +23,14 @@ public class ScheduledTask {
 	public void execute() throws Exception {
 //		jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
 //		jobLauncher.run(importJob, jobParameters);
-		testAsync();
-		System.out.println("lala" + System.currentTimeMillis());
+//		testAsync();
+//		System.out.println("lala" + System.currentTimeMillis());
 	}
 	
-	@Async
+	@Async("哈哈")
 	public void testAsync() {
+		System.out.println("Execute testAsync asynchronously - "  
+			      + Thread.currentThread().getName());  
 		long start = System.currentTimeMillis();
 		try {
 			TimeUnit.SECONDS.sleep(2);
@@ -35,6 +39,20 @@ public class ScheduledTask {
 			e.printStackTrace();
 		}
 		long end = System.currentTimeMillis();
-		System.out.println("异步执行…………" + (end - start));
+		System.out.println("异步执行…………" + (end - start) + Thread.currentThread().getName());
+	}
+	
+	@Async("sdfasdf")
+	public Future<String> testResultAsync() {
+		System.out.println("Execute testResultAsync asynchronously - "  
+			      + Thread.currentThread().getName());  
+		try {
+			TimeUnit.SECONDS.sleep(5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		AsyncResult<String> result = new AsyncResult<String>("异步");
+		return result;
 	}
 }

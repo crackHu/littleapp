@@ -43,7 +43,7 @@ public interface Concurrent<T> {
 		return results;
 	}
 
-	default List<T> run(List<String> domains, String threadNum) {
+	default List<T> run(String threadNum) {
 		return execute(getCallables(), threadNum);
 	};
 }

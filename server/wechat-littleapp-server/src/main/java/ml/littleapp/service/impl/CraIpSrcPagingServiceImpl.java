@@ -1,6 +1,5 @@
 package ml.littleapp.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Maps;
 
 import ml.littleapp.config.ApplicationProperties;
+import ml.littleapp.crawler.concurrent.impl.IpSrcPagingCrawler;
 import ml.littleapp.pojo.CraIpSrc;
 import ml.littleapp.pojo.CraIpSrcPaging;
 import ml.littleapp.service.CraIpSrcPagingService;
@@ -46,7 +46,7 @@ public class CraIpSrcPagingServiceImpl extends BaseServiceImpl<CraIpSrcPaging> i
 					return map;
 				})
 				.collect(Collectors.toList());
-		
-		
+		IpSrcPagingCrawler ipSrcPagingCrawler = new IpSrcPagingCrawler(domainPageTotals);
+		ipSrcPagingCrawler.run(getIpProperties().getPaging().getThreadNum());
 	}
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,6 +31,7 @@ public class IpSrcPagingCrawler implements Concurrent<IpSrcPagingPage>, Crawler 
 		List<Callable<IpSrcPagingPage>> callables = new ArrayList<Callable<IpSrcPagingPage>>();
 		
 		domainPageTotals.stream().forEach(domainPageTotals -> {
+			@SuppressWarnings("unused")
 			Callable<IpSrcPagingPage> crawler = () -> {
 				String domain = (String) domainPageTotals.get("domain");
 				String query = (String) domainPageTotals.get("query");
@@ -38,7 +41,10 @@ public class IpSrcPagingCrawler implements Concurrent<IpSrcPagingPage>, Crawler 
 				Assert.hasText(query, "query is invalid");
 				Assert.notNull(pageTotal, "pageTotal is invalid");
 				
-				domain = domain + "/" + query;
+				ForkJoinPool forkJoinPool = new ForkJoinPool();
+				IpSrcPagingTask task = new IpSrcPagingTask(domain, query, pageTotal);
+				ForkJoinTask<List<Document>> joinTask = forkJoinPool.submit(task);
+				List<Document> docList = joinTask.get();
 				
 				Document document = crawler(domain);
 				String title = document.title();

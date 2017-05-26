@@ -32,8 +32,6 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 
 	@Inject
 	private IdWorker idWorker;
-	@Inject
-	private ApplicationProperties applicationProperties;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	private Example example = null; // new Example(CraIpSrc.class)
@@ -43,7 +41,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 	public void init() throws Exception {
 		List<String> domains = initIpProperties();
 		IpSrcCrawler ipSrcCrawler = new IpSrcCrawler(domains);
-		List<IpSrcPage> ipSrcPages = ipSrcCrawler.run(domains, getInitProperties().getThreadNum());
+		List<IpSrcPage> ipSrcPages = ipSrcCrawler.run(getIpProperties().getInit().getThreadNum());
 
 		IntStream.range(0, ipSrcPages.size()).forEach(index -> {
 			String domain = domains.get(index);
@@ -68,7 +66,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 	public List<String> initIpProperties() throws Exception {
 		List<CraIpSrc> ipSrcs = super.mapper.selectAll();
 		// List<String> ipSiteList = GetPropertiesUtil.getIpSites();
-		List<String> ipSiteList = Arrays.asList(applicationProperties.getCrawler().getIp().getSources());
+		List<String> ipSiteList = Arrays.asList(getIpProperties().getSources());
 
 		// 需要插入的集合
 		List<String> insertList = new ArrayList<String>(ipSiteList);
@@ -130,7 +128,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 		};
 
 		ExecutorService executorService = Executors.newCachedThreadPool();
-		executorService = ExecutorHelper.executor(getInitProperties().getThreadNum());
+		executorService = ExecutorHelper.executor(getIpProperties().getInit().getThreadNum());
 
 		try {
 			if (updateList.size() > 0)
@@ -159,11 +157,6 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 		// List<WebPage> wpInfo = webPage.getWPInfo();
 		// long end1 = System.currentTimeMillis();
 		// System.out.println("使用时间：" + (end1 - start1) + "ms");
-	}
-
-	@ConstStatistics
-	private Init getInitProperties() {
-		return applicationProperties.getCrawler().getIp().getInit();
 	}
 
 	private void batchModifyActiveOrNotByDomains(List<String> domains, Boolean isActive) {

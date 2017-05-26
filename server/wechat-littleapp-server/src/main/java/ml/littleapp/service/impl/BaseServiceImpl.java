@@ -5,6 +5,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import com.github.pagehelper.PageHelper;
+
+import ml.littleapp.config.ApplicationProperties;
+import ml.littleapp.config.ApplicationProperties.Crawler.Ip;
 import ml.littleapp.pojo.BaseEntity;
 import ml.littleapp.service.BaseService;
 import tk.mybatis.mapper.common.Mapper;
@@ -13,6 +16,8 @@ public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
 	@Inject
 	protected Mapper<T> mapper;
+	@Inject
+	private ApplicationProperties applicationProperties;
 
 	@Override
 	public List<T> getAll(T t) throws Exception {
@@ -48,5 +53,9 @@ public class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 	@Override
 	public int update(T t) throws Exception {
 		return mapper.updateByPrimaryKey(t);
+	}
+	
+	protected Ip getIpProperties() {
+		return applicationProperties.getCrawler().getIp();
 	}
 }

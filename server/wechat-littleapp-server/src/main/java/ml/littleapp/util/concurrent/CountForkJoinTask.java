@@ -49,7 +49,7 @@ public class CountForkJoinTask extends RecursiveTask<Integer> {
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		long start = System.currentTimeMillis();
 		ForkJoinPool forkJoinPool = new ForkJoinPool();
-		CountForkJoinTask task = new CountForkJoinTask(1, 11111114);
+		CountForkJoinTask task = new CountForkJoinTask(1, 111);
 		ForkJoinTask<Integer> submit = forkJoinPool.submit(task);
 		Integer integer = null;
 		try {

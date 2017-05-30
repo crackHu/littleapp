@@ -41,10 +41,11 @@ public class IpSrcPagingCrawler implements Concurrent<IpSrcPagingPage>, Crawler 
 				Assert.hasText(query, "query is invalid");
 				Assert.notNull(pageTotal, "pageTotal is invalid");
 				
-				ForkJoinPool forkJoinPool = new ForkJoinPool();
-				IpSrcPagingTask task = new IpSrcPagingTask(domain, query, pageTotal);
-				ForkJoinTask<List<Document>> joinTask = forkJoinPool.submit(task);
-				List<Document> docList = joinTask.get();
+//				弃用 fork/join 框架
+//				ForkJoinPool forkJoinPool = new ForkJoinPool();
+//				IpSrcPagingTask task = new IpSrcPagingTask(domain, query, pageTotal);
+//				ForkJoinTask<List<Document>> joinTask = forkJoinPool.submit(task);
+//				List<Document> docList = joinTask.get();
 				
 				Document document = crawler(domain);
 				String title = document.title();

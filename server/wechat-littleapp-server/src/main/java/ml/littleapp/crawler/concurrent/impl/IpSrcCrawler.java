@@ -39,7 +39,9 @@ public class IpSrcCrawler implements Concurrent<IpSrcPage>, Crawler {
 				Document document = crawler(domain);
 				String title = document.title();
 				String content = document.select("#body").html();
-				Date gmtModified = DateUtils.parseDate(document.select("#ip_list .odd").get(0).select("td").last().text(), pattern);
+				
+				String selectText = document.select("#ip_list .odd").get(0).select("td").last().text();
+				Date gmtModified = DateUtils.parseDate(selectText, pattern);
 				
 				Elements paginations = document.select(".pagination a");
 				Element lastPage = paginations.get(paginations.size() - 2);

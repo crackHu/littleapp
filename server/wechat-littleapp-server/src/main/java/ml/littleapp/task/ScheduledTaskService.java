@@ -1,5 +1,6 @@
 package ml.littleapp.task;
 
+import java.util.Random;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -54,5 +55,16 @@ public class ScheduledTaskService {
 		}
 		AsyncResult<String> result = new AsyncResult<String>("异步");
 		return result;
+	}
+	
+	public static void main(String[] args) {
+		String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < 43; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        System.out.println(sb);
 	}
 }

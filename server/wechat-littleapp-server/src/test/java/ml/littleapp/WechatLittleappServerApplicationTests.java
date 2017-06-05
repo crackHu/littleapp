@@ -185,7 +185,9 @@ public class WechatLittleappServerApplicationTests {
 	
 	@Test
 	public void testRabbitMQ() {
-		sender.send();
+		// sender.send();
+		sender.sendPagingInfo();
+		// sender.sendLog("sadf", "dsfdd", "dfsdd23");
 	}
 	
 	@Test

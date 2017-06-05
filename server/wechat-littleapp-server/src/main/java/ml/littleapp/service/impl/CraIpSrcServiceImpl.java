@@ -145,7 +145,7 @@ public class CraIpSrcServiceImpl extends BaseServiceImpl<CraIpSrc> implements Cr
 			executorService.shutdown();
 		}
 
-		return insertList;
+		return ipSiteList;
 
 		// 串行 646ms
 		// 1线程 393ms

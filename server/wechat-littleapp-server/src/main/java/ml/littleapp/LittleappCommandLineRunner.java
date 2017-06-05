@@ -35,9 +35,9 @@ public class LittleappCommandLineRunner implements CommandLineRunner {
 //			@Override
 //			public void run() {
 //				try {
-					ipSrcServiceImpl.init();
+					// ipSrcServiceImpl.init();
 					log.info("努力😡");
-					ipSrcPagingServiceImpl.paging();
+					// ipSrcPagingServiceImpl.paging();
 //				} catch (Exception e) {
 //					log.error("LittleappCommandLineRunner init error", e);
 //				}

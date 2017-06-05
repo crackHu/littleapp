@@ -6,11 +6,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 
 public interface Crawler {
 
 	final Logger log = LoggerFactory.getLogger(Crawler.class);
 
+	@Async
 	default Document crawler(String domain) {
 		log.info("爬取：{} ……", domain);
 		Document document = null;

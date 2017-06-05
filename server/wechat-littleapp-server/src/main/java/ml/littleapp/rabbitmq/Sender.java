@@ -31,4 +31,11 @@ public class Sender {
     	
     	this.rabbitTemplate.convertAndSend("log", sysLog);
     }
+    
+    public void sendPagingInfo() {
+    	String context = "hello " + new Date();
+        System.out.println("sendPagingInfo Sender : " + context);
+        this.rabbitTemplate.convertAndSend("crawler", context);
+    }
+    
 }

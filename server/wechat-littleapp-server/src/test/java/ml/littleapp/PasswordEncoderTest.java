@@ -41,7 +41,7 @@ public class PasswordEncoderTest {
 	}
 	
 	public static void bcrypt() {
-		String password = "123456";  
+		String password = "needless";  
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();  
         String hashedPassword = passwordEncoder.encode(password);  
    

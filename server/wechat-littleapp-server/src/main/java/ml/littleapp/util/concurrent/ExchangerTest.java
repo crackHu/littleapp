@@ -3,47 +3,87 @@ package ml.littleapp.util.concurrent;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 
-/**
- * @author amber2012
- * 
- *         Exchanger: 用于实现两个人之间的数据交换，每个人在完成一定的事务后想与对方交换数据，第一个先拿出数据的人将一直等待第二
- *         个人拿着数据到来时，才能彼此交换数据。
- */
 public class ExchangerTest {
+	protected static final Logger log = Logger.getLogger(ExchangerTest.class);
+	private static volatile boolean isDone = false;
 
+	static class ExchangerProducer implements Runnable {
+		private Exchanger<Integer> exchanger;
+		private static int data = 1;
+
+		ExchangerProducer(Exchanger<Integer> exchanger) {
+			this.exchanger = exchanger;
+		}
+
+		@Override
+		public void run() {
+			while (!Thread.interrupted() && !isDone) {
+				for (int i = 1; i <= 3; i++) {
+					try {
+						TimeUnit.SECONDS.sleep(1);
+						data = i;
+						System.out.println("producer before: " + data);
+						data = exchanger.exchange(data);
+						System.out.println("producer after: " + data);
+					} catch (InterruptedException e) {
+						log.error(e, e);
+					}
+				}
+				isDone = true;
+			}
+		}
+	}
+
+	static class ExchangerConsumer implements Runnable {
+		private Exchanger<Integer> exchanger;
+		private static int data = 0;
+
+		ExchangerConsumer(Exchanger<Integer> exchanger) {
+			this.exchanger = exchanger;
+		}
+
+		@Override
+		public void run() {
+			while (!Thread.interrupted() && !isDone) {
+				data = 0;
+				System.out.println("consumer before : " + data);
+				try {
+					TimeUnit.SECONDS.sleep(1);
+					data = exchanger.exchange(data);
+				} catch (InterruptedException e) {
+					log.error(e, e);
+				}
+				System.out.println("consumer after : " + data);
+			}
+		}
+	}
+
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		ExecutorService service = Executors.newCachedThreadPool();
-		final Exchanger exchanger = new Exchanger();
-
-		service.execute(new Runnable() {
-			public void run() {
-				try {
-					String data1 = "zxx";
-					System.out.println("线程" + Thread.currentThread().getName() + "正在把数据" + data1 + "换出去");
-					Thread.sleep(1000L);
-
-					@SuppressWarnings("unchecked")
-					String data2 = (String) exchanger.exchange(data1);
-					System.out.println("线程" + Thread.currentThread().getName() + "换回的数据为" + data2);
-				} catch (Exception e) {
-				}
+		ExecutorService exec = Executors.newCachedThreadPool();
+		Exchanger<Integer> exchanger = new Exchanger<Integer>();
+		ExchangerProducer producer = new ExchangerProducer(exchanger);
+		ExchangerConsumer consumer = new ExchangerConsumer(exchanger);
+		exec.execute(producer);
+		exec.execute(consumer);
+		exec.shutdown();
+//		try {
+//			exec.awaitTermination(30, TimeUnit.SECONDS);
+//		} catch (InterruptedException e) {
+//			log.error(e, e);
+//		}
+		try {
+			while (!exec.awaitTermination(2, TimeUnit.SECONDS)) {  
+			    System.out.println("线程池没有关闭");  
 			}
-		});
-
-		service.execute(new Runnable() {
-			public void run() {
-				try {
-					String data1 = "lhm";
-					System.out.println("线程" + Thread.currentThread().getName() + "正在把数据" + data1 + "换出去");
-					Thread.sleep(2000L);
-
-					@SuppressWarnings("unchecked")
-					String data2 = (String) exchanger.exchange(data1);
-					System.out.println("线程" + Thread.currentThread().getName() + "换回的数据为" + data2);
-				} catch (Exception e) {
-				}
-			}
-		});
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}  
+		System.out.println("线程池已经关闭");  
 	}
 }

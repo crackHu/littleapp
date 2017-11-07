@@ -6,8 +6,9 @@
 	<Local Expanded="Yes">
 		<Model Expanded="Yes" ID="{98C52F84-98CA-42E8-B92D-2CF898F5103E}" Loaded="No" Name="littleapp" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="littleapp.pdm"/>
 		<Model ID="{93B6F72A-A7D2-47F2-8C34-BAB521817DC0}" Loaded="No" Name="base" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="base.pdm"/>
-		<Model Expanded="Yes" ID="{D0F52518-814D-45F0-823A-A5A89B26A78C}" Name="peoplesmedic_V1" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="peoplesmedic_V1.pdm"/>
-		<Model Expanded="Yes" ID="{ACED6256-5A15-40EC-A34B-96F5D626CFAA}" Name="peoplesmedic_V2" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="peoplesmedic_V2.pdm"/>
+		<Model Expanded="Yes" ID="{D0F52518-814D-45F0-823A-A5A89B26A78C}" Loaded="No" Name="peoplesmedic_V1" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="peoplesmedic_V1.pdm"/>
+		<Model Expanded="Yes" ID="{ACED6256-5A15-40EC-A34B-96F5D626CFAA}" Loaded="No" Name="peoplesmedic_V2" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="peoplesmedic_V2.pdm"/>
+		<Model Expanded="Yes" ID="{56E7BF85-846D-4D6C-BEA2-5ED29A3B1816}" Name="PhysicalDataModel_1" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="/GitProject/PM-server/import.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>

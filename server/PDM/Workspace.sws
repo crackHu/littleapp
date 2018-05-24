@@ -8,7 +8,8 @@
 		<Model ID="{93B6F72A-A7D2-47F2-8C34-BAB521817DC0}" Loaded="No" Name="base" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="base.pdm"/>
 		<Model Expanded="Yes" ID="{D0F52518-814D-45F0-823A-A5A89B26A78C}" Loaded="No" Name="peoplesmedic_V1" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="peoplesmedic_V1.pdm"/>
 		<Model ID="{ACED6256-5A15-40EC-A34B-96F5D626CFAA}" Loaded="No" Name="peoplesmedic_V2" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="peoplesmedic_V2.pdm"/>
-		<Model Expanded="Yes" ID="{CCB7826C-70B5-4236-9D8E-58FF33990EA8}" Name="pm" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="/crack/OneDrive/PMDoc/sql/pm.pdm"/>
+		<Model Expanded="Yes" ID="{CCB7826C-70B5-4236-9D8E-58FF33990EA8}" Loaded="No" Name="pm" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="/crack/OneDrive/PMDoc/sql/pm.pdm"/>
+		<Model Expanded="Yes" ID="{E499CCAB-415C-4C01-9A39-85B8FE9F84FD}" Name="chestnut" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="/crack/OneDrive/ChestnutDoc/chestnut.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
 </Workspace>
